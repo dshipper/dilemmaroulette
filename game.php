@@ -39,6 +39,7 @@ $user_id = $_COOKIE['user_id'];
     </script>
 </head>                                               
 <body>
+	<div id="status-id">We haven't started a new game yet....</div>
  <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
 		 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
 		 when JavaScript is disabled.
