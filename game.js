@@ -7,7 +7,7 @@
 */          
 
 GameType = {
-	ROCK_PAPER_SCISSORS : 0,
+	ROCK_PAPER_SCISSORS: 0,
 	PRISONER: 1,
 	STAG_HUNT: 2,
 	BLOTTO: 3  
@@ -91,22 +91,25 @@ function makeDecision(){
 	var decision = -1;
 	
 	if(game_type == GameType.ROCK_PAPER_SCISSORS){
-		var rock = document.decisionForm.elements[0].value;
+		/*var rock = document.decisionForm.elements[0].value;
 		var paper = document.decisionForm.elements[1].value;
-		var scissors = document.decisionForm.elements[2].value; 
+		var scissors = document.decisionForm.elements[2].value;*/
+		var rock = $("input[class='rock']:checked").val();   
+		var paper = $("input[class='paper']:checked").val();   
+		var scissor = $("input[class='scissor']:checked").val();
 		if(rock == "on"){
 			decision = 0; //rock
 		}                  
 		else if (paper == "on"){
 			decision = 1;  //paper
 		}                   
-		else if(scissors == "on"){
+		else if(scissor == "on"){
 			decision = 2;  //scissor
 		}
 	}    
 	$("#status-id").html("Waiting for your partner...");  
 	$(".content").html("...");
-	$.get("makeDecision.php?u="user_id+"&g="+game_id+"&d="+decision);
+	$.get("makeDecision.php?u="+user_id+"&g="+game_id+"&d="+decision);
 }
 
 function gameSwitch(){       
@@ -120,7 +123,7 @@ function gameSwitch(){
 	else if(this.game_state == 1){
 		//that means we're in a game
 		var opponent_id = this.opponent_id;
-		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[this.game_type]);
+		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[game.game_type]);
 		this.game_state = 2;
 		setTimeout("game.gameSwitch();", 3000);
 	}

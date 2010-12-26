@@ -5,10 +5,10 @@ $game_type = $_GET['g'];
 if($game_type == GameType::ROCK_PAPER_SCISSORS){
 	$description = "Just your garden variety rocks, paper scissors game. Scissors beats paper. Paper beats rock. Rock beats scissors. 
 						Best of three rounds (not including ties) wins 50 points.";
-	$decision_framework = "<input type='radio' class='decision' name='decision' id='decision'/>Rock<br>
-	<input type='radio' class='decision' name='decision' id='decision'/>Paper<br>
-	<input type='radio' class='decision' name='decision' id='decision'/>Scissor<br>
-	<input type='submit' value=\"That's My Final Answer\"/>";					
+	$decision_framework = "<input type='radio' class='rock' name='decision' id='decision'/>Rock<br>
+	<input type='radio' class='paper' name='decision' id='decision'/>Paper<br>
+	<input type='radio' class='scissor' name='decision' id='decision'/>Scissor<br>
+	<input type='submit' value=\"Shoot!\"/>";					
 }
 else if($game_type == GameType::PRISONER){
 	
