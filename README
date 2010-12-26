@@ -2,12 +2,21 @@ Dilemma Roulette (The project restart)
                                       
 Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
-was extremely slow and buggy.
+was extremely slow and buggy.                                           
 
+Iteration Two - started December 25
+Implement a simple tic-tac-toe game which means:
+Login
+Match games
+Display if partner has logged out
+Display a decision page (with room for expansion to multiple games)
+Display a carnage page
+Make everything work every time with no bugs.
+
+------------------------------------------------------------------------
 Iteration One - started December 24         
 Login (without Facebook)
 Match games
 Display if your partner has logged out
-Display messages from your partner
 
 Errors with object function calls
