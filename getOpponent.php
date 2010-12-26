@@ -18,12 +18,22 @@ if($u != 0){
 	mysql_query($sql);                       
 	print "".$row['user_one']."/".$row['id']."/".$row['type']."/".$opponent_peer_id;
 }                       
-else{  
-	$game_type = mt_rand(1,4);
-	$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')";
-	mysql_query($sql);
-	$game_id = mysql_insert_id();
-	print "$game_type/$game_id";
+else{
+	$sql = "SELECT * FROM `games` WHERE `state`='$waiting' AND `user_one` = '$user_id' AND `user_two` = 0 LIMIT 1";
+	$r = mysql_query($sql);
+	$row = mysql_fetch_array($r);     
+	if(!$row['id']){  
+		$game_type = mt_rand(1,4);
+		$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')";
+		mysql_query($sql);
+		$game_id = mysql_insert_id();
+		print "$game_type/$game_id";     
+   }
+   else{  	                                 
+		$game_type = $row['type'];
+		$game_id = $row['id'];
+		print "$game_type/$game_id"; 
+   }
 }
 
 

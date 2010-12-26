@@ -86,7 +86,7 @@ function gameSwitch(){
 		var opponent_id = this.opponent_id;
 		$("#status-id").html("Connected to an opponent. His id is: " + this.opponent_id);
 	}
-	else if(this.game_State == -1){
+	else if(this.game_state == -1){
 		//that means our opponent logged out
 		$("#status-id").html("Opponent quit.");
 	}                       
@@ -112,11 +112,10 @@ function keepUserLoggedIn(){
 
 function checkIfOpponentLoggedOut(){
 	var opponent_user_id = game.opponent_id;              
-	this.keep_checking_for_opponent_logged_out = setInterval(function(){
+	game.keep_checking_for_opponent_logged_out = setInterval(function(){
 	   	$.get("getLoggedOut.php?o="+opponent_user_id, function(data){
-			if(data == "quit" ){ 
-				alert("Sorry your opponent quit.");
-				clearInterval(this.keep_checking_for_opponent_logged_out);  
+			if(data == "quit" ){                
+				clearInterval(game.keep_checking_for_opponent_logged_out);  
 				//TODO: this may not be the best way to handle it.
 				game.game_state = -1;
 				game.gameSwitch();          
