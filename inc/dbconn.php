@@ -9,9 +9,9 @@ class GameState{
 }          
 
 class GameType{
+	const ROCK_PAPER_SCISSORS = 0;
 	const PRISONER = 1;
-	const STAG = 2;
-	const RPS = 3;
-	const BLOTTO = 4;
+	const STAG_HUNT = 2;
+	const BLOTTO = 3;
 }
 ?>

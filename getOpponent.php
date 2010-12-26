@@ -23,7 +23,8 @@ else{
 	$r = mysql_query($sql);
 	$row = mysql_fetch_array($r);     
 	if(!$row['id']){  
-		$game_type = mt_rand(1,4);
+		//$game_type = mt_rand(0,3);  
+		$game_type = GameType::ROCK_PAPER_SCISSORS;
 		$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')";
 		mysql_query($sql);
 		$game_id = mysql_insert_id();

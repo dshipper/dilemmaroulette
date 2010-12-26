@@ -4,7 +4,16 @@
      
 /****************************************************************
 	******** Utility Functions ********
-*/
+*/          
+
+GameType = {
+	ROCK_PAPER_SCISSORS : 0,
+	PRISONER: 1,
+	STAG_HUNT: 2,
+	BLOTTO: 3  
+}
+
+var gameTypeArray = new Array("Rock, Paper, Scissors", "Prisoner's Dilemma", "Stag Hunt", "Blotto");
 
 function getCookie(c_name){
 	if(document.cookie.length > 0){
@@ -56,7 +65,8 @@ function Game(){
 	this.getOpponent = getOpponent;
 	this.newGame = newGame;
 	this.checkIfOpponentLoggedOut = checkIfOpponentLoggedOut;
-	this.gameSwitch = gameSwitch;  
+	this.gameSwitch = gameSwitch; 
+	this.makeDecision = makeDecision; 
 }       
 
 var game = new Game();
@@ -72,6 +82,32 @@ function newGame(){
 	}                                          
 	this.gameSwitch();
 }
+  
+function makeDecision(){ 
+	var user_id = this.user_id;
+	var opponent_id = this.opponent_id;
+	var game_type = this.game_type;
+	var game_id = this.game_id;
+	var decision = -1;
+	
+	if(game_type == GameType.ROCK_PAPER_SCISSORS){
+		var rock = document.decisionForm.elements[0].value;
+		var paper = document.decisionForm.elements[1].value;
+		var scissors = document.decisionForm.elements[2].value; 
+		if(rock == "on"){
+			decision = 0; //rock
+		}                  
+		else if (paper == "on"){
+			decision = 1;  //paper
+		}                   
+		else if(scissors == "on"){
+			decision = 2;  //scissor
+		}
+	}    
+	$("#status-id").html("Waiting for your partner...");  
+	$(".content").html("...");
+	$.get("makeDecision.php?u="user_id+"&g="+game_id+"&d="+decision);
+}
 
 function gameSwitch(){       
 	if(this.game_state == 0){
@@ -84,7 +120,15 @@ function gameSwitch(){
 	else if(this.game_state == 1){
 		//that means we're in a game
 		var opponent_id = this.opponent_id;
-		$("#status-id").html("Connected to an opponent. His id is: " + this.opponent_id);
+		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[this.game_type]);
+		this.game_state = 2;
+		setTimeout("game.gameSwitch();", 3000);
+	}
+	else if(this.game_state == 2){
+		//that mean's that we're displaying the decision page.
+		$("#status-id").html("Decision Time.");
+		$(".content").load("displayDecision.php?g="+game.game_type);
+		this.game_state = 3;
 	}
 	else if(this.game_state == -1){
 		//that means our opponent logged out
@@ -111,9 +155,10 @@ function keepUserLoggedIn(){
 }
 
 function checkIfOpponentLoggedOut(){
-	var opponent_user_id = game.opponent_id;              
+	var opponent_user_id = game.opponent_id;   
+	var user_id = game.user_id;           
 	game.keep_checking_for_opponent_logged_out = setInterval(function(){
-	   	$.get("getLoggedOut.php?o="+opponent_user_id, function(data){
+	   	$.get("getLoggedOut.php?o="+opponent_user_id+"&u="+user_id, function(data){
 			if(data == "quit" ){                
 				clearInterval(game.keep_checking_for_opponent_logged_out);  
 				//TODO: this may not be the best way to handle it.
@@ -142,8 +187,7 @@ function checkConnected(){
 }
 
 function getOpponent(){   
-	var user_id = this.user_id;
-	alert("USER ID: " + user_id);
+	var user_id = this.user_id;  
 	var game_type = -1;
 	var game_id = -1;
 	$.get("getOpponent.php?u="+user_id, function(data){
@@ -172,8 +216,7 @@ function getOpponent(){
 			game.opponent_peer_id = array[3];  
 			if(game.opponent_id == -1 || game.game_id == "-1" || game.game_id == -1 || game.game_type == -1 || game.opponent_peer_id == -1){
 				alert("Error 80");
-			} 
-			alert("Opponent id: " + game.opponent_id + ". "+array[0]);                    
+			}                                                                             
 			//now connect via flash... 
 			var ret = getFlexApp('DilemmaRoulette').connect(game.opponent_peer_id);
 			if(ret == "failed"){    
