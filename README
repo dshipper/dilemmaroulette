@@ -5,7 +5,7 @@ due to poor design consideration at the beginning meaning development
 was extremely slow and buggy.                                           
 
 Iteration Two - started December 25
-Implement a simple tic-tac-toe game which means:
+Implement a simple rock-paper-scissor game which means:
 Login
 Match games
 Display if partner has logged out
