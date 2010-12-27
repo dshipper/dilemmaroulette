@@ -13,7 +13,16 @@ GameType = {
 	BLOTTO: 3  
 }
 
+RPS = {
+	ROCK: 0,
+	PAPER: 1,
+	SCISSOR: 2
+}
+
 var gameTypeArray = new Array("Rock, Paper, Scissors", "Prisoner's Dilemma", "Stag Hunt", "Blotto");
+var rpsArray = new Array("rock", "paper", "scissor");
+//rounds array structure: RPS, PRISONER, STAG_HUNT, BLOTTO      
+var roundsArray = new Array(3,3,1,1);
 
 function getCookie(c_name){
 	if(document.cookie.length > 0){
@@ -59,6 +68,7 @@ function Game(){
 	this.game_state = 0;
 	this.keep_checking_for_opponent_logged_out = null;
 	this.game_over = true; 
+	this.rounds = 0;
 	
 	this.setUserPeerId = setUserPeerId;
 	this.keepUserLoggedIn = keepUserLoggedIn; 
@@ -66,7 +76,8 @@ function Game(){
 	this.newGame = newGame;
 	this.checkIfOpponentLoggedOut = checkIfOpponentLoggedOut;
 	this.gameSwitch = gameSwitch; 
-	this.makeDecision = makeDecision; 
+	this.makeDecision = makeDecision;
+	this.processDecision = processDecision; 
 }       
 
 var game = new Game();
@@ -83,6 +94,31 @@ function newGame(){
 	this.gameSwitch();
 }
   
+function processDecision(user_decision, opponent_decision){
+	if(this.game_type == GameType.ROCK_PAPER_SCISSORS){                        
+		if((user_decision == RPS.ROCK && opponent_decision == RPS.PAPER) || (user_decision == RPS.PAPER && opponent_decision == RPS.SCISSOR)|| (user_decision == RPS.SCISSOR && opponent_decision == RPS.ROCK)){
+			//we lost dude
+			$(".content").html("You lost! You played " + rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Try again next time!");
+		}                                                                                                        
+		else if((opponent_decision == RPS.ROCK && user_decision == RPS.PAPER) || (opponent_decision == RPS.PAPER && user_decision == RPS.SCISSOR)|| (opponent_decision == RPS.SCISSOR && user_decision == RPS.ROCK)){
+			//we won
+		   $(".content").html("You won! You played "+ rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Nice work!"); 
+		}                                                                                               
+		else if(user_decision == opponent_decision){  
+			//we tied
+			$(".content").html("You tied. You played " + rpsArray[user_decision] + " and so did your opponent. Try again.");
+		}
+	}
+    this.rounds = this.rounds+1;
+ 	if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
+		this.game_state = 3; //reconnect
+	}                       
+	else{
+		this.game_state = 4; //carnage
+	}
+	setTimeout("game.gameSwitch()", 5000);
+}
+
 function makeDecision(){ 
 	var user_id = this.user_id;
 	var opponent_id = this.opponent_id;
@@ -110,6 +146,17 @@ function makeDecision(){
 	$("#status-id").html("Waiting for your partner...");  
 	$(".content").html("...");
 	$.get("makeDecision.php?u="+user_id+"&g="+game_id+"&d="+decision);
+	
+	var checked = setInterval(function(){
+		$.get("getDecision.php?o="+opponent_id+"&g="+game_id, function(data){
+			if(data != ""){
+				//then we got a decision 
+				$("#status-id").html("Decision!"); 
+				clearInterval(checked);            
+				game.processDecision(decision,data); 
+			}
+		});
+	}, 3000);
 }
 
 function gameSwitch(){       
@@ -123,7 +170,11 @@ function gameSwitch(){
 	else if(this.game_state == 1){
 		//that means we're in a game
 		var opponent_id = this.opponent_id;
-		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[game.game_type]);
+		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[game.game_type]); 
+		if(game.game_type == null || gameTypeArray[game.game_type] == null){
+			alert(game_type);
+			alert("Error 166");
+		}
 		this.game_state = 2;
 		setTimeout("game.gameSwitch();", 3000);
 	}
@@ -131,7 +182,6 @@ function gameSwitch(){
 		//that mean's that we're displaying the decision page.
 		$("#status-id").html("Decision Time.");
 		$(".content").load("displayDecision.php?g="+game.game_type);
-		this.game_state = 3;
 	}
 	else if(this.game_state == -1){
 		//that means our opponent logged out
