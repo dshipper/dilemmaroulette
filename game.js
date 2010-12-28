@@ -177,11 +177,15 @@ function gameSwitch(){
 		}
 		this.game_state = 2;
 		setTimeout("game.gameSwitch();", 3000);
-	}
+	} 
 	else if(this.game_state == 2){
 		//that mean's that we're displaying the decision page.
 		$("#status-id").html("Decision Time.");
 		$(".content").load("displayDecision.php?g="+game.game_type);
+	}   
+	else if(this.game_state == 3){
+		//this means we have to reconnect to the last guy
+		
 	}
 	else if(this.game_state == -1){
 		//that means our opponent logged out
