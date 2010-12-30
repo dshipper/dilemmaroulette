@@ -116,7 +116,15 @@ function processDecision(user_decision, opponent_decision){
 	else{
 		this.game_state = 4; //carnage
 	}
-	setTimeout("game.gameSwitch()", 5000);
+	var game_id = game.game_id;
+	$.get("setGameEnded.php?g="+game_id, function(data){
+		if(data != "1"){
+			alert("Error. SetGameEnded.");
+		}
+		else{
+			setTimeout("game.gameSwitch()", 5000); 
+		}
+	});
 }
 
 function makeDecision(){ 
@@ -162,7 +170,7 @@ function makeDecision(){
 function gameSwitch(){       
 	if(this.game_state == 0){
 		//we are looking for an opponent
-		this.getOpponent();        
+		this.getOpponent(false);        
 		$("#status-id").html("Looking for an opponent....");
 		this.game_state = 1;   
 		return;
@@ -185,10 +193,17 @@ function gameSwitch(){
 	}   
 	else if(this.game_state == 3){
 		//this means we have to reconnect to the last guy
-		
+		$("#status-id").html("Reconnecting to previous opponent...");
+		game.game_state = 1;
+		game.getOpponent(true);
+	}
+	else if(this.game_state == 4){
+		$("#status-id").html("Postgame report");
+		$(".content").load("postGame.php");  
 	}
 	else if(this.game_state == -1){
-		//that means our opponent logged out
+		//that means our opponent logged out  
+		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
 	}                       
 	       
@@ -228,7 +243,8 @@ function checkIfOpponentLoggedOut(){
 
 function checkConnected(){                  
 	var ret = getFlexApp('DilemmaRoulette').getConnected();
-	if(ret == 1){                           
+	if(ret == 1){
+	    clearInterval(game.keep_checking_for_opponent_logged_out);                           
 		game.checkIfOpponentLoggedOut();
 		game.gameSwitch(); 
 	}   
@@ -243,11 +259,20 @@ function checkConnected(){
 	}
 }
 
-function getOpponent(){   
+function rctrue(reconnect){
+	if(reconnect){
+		return "1";
+	}              
+	else{
+		return "0";
+	}
+}
+
+function getOpponent(reconnect){   
 	var user_id = this.user_id;  
 	var game_type = -1;
 	var game_id = -1;
-	$.get("getOpponent.php?u="+user_id, function(data){
+	$.get("getOpponent.php?u="+user_id+"&k="+rctrue(reconnect), function(data){
 		if(!data.match(/^[\d]+\/[\d]+$/) && !data.match(/^[\d]+\/[\d]+\/[\d]+\/[\w]+$/)){
 			alert("Error with data: " + data);
 			game.newGame();
@@ -255,18 +280,21 @@ function getOpponent(){
 		}
 		var array = data.split("/");
 		if(array.length < 3){
-			alert("We didn't find a match. Now we wait for someone to connect to us."); 
+			//alert("We didn't find a match. Now we wait for someone to connect to us."); 
 			game.game_type = array[0];
 			game.game_id = array[1];     
 			if(game.game_type == -1 || game.game_id == -1){
 				alert("Error 67.");
+			}
+			if(reconnect = true){
+				getFlexApp('DilemmaRoulette').reset();
 			}
 			//now the only piece of info we don't have is the opponent's id
 			//so this should be given to us when we get connected to by another
 			//flash instance.             
 		}  
 		else{
-			alert("We found a match. Now connecting..."); 
+			//alert("We found a match. Now connecting..."); 
 			game.opponent_id = array[0];
 			game.game_id = array[1];
 			game.game_type = array[2] ;
@@ -274,7 +302,7 @@ function getOpponent(){
 			if(game.opponent_id == -1 || game.game_id == "-1" || game.game_id == -1 || game.game_type == -1 || game.opponent_peer_id == -1){
 				alert("Error 80");
 			}                                                                             
-			//now connect via flash... 
+			//now connect via flash...                        
 			var ret = getFlexApp('DilemmaRoulette').connect(game.opponent_peer_id);
 			if(ret == "failed"){    
 				var game_id = game.game_id;
@@ -283,7 +311,7 @@ function getOpponent(){
 						alert("Error. SetGameEnded.");
 					}
 				});
-				game.newGame();
+				
 			}
 			else{
 				setTimeout("checkConnected()", 1000);
@@ -307,7 +335,7 @@ function connectedToOpponent(peer_id){
 		game.opponent_peer_id = peer_id;
    		//now get their id
    		$.get("getIdByPeer.php?p="+peer_id, function(data){
-			if(data != ""){
+			if(data != ""){                
 				game.opponent_id = data;
 				game.checkIfOpponentLoggedOut();
 				game.gameSwitch();
