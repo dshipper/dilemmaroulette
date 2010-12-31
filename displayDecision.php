@@ -11,7 +11,10 @@ if($game_type == GameType::ROCK_PAPER_SCISSORS){
 	<input type='submit' value=\"Shoot!\"/>";					
 }
 else if($game_type == GameType::PRISONER){
-	
+	$description = "Prisoner's Dilemma. Are you gonna screw over your partner or are you trustworthy?";
+	$decision_framework = "<input type='radio' class='squeal' name='decision' id='decision'/>Squeal<br>
+	<input type='radio' class='silent' name='decision' id='decision'/>Stay silent<br>    
+	<input type='submit' value=\"That's my final answer\"/>";
 }   
 else if ($game_type == GameType::STAG_HUNT){
 	

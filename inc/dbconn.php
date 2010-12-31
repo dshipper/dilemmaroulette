@@ -21,4 +21,9 @@ class RPS {
 	const PAPER = 1;
 	const SCISSOR = 2;
 }
+
+class PRISONER{
+	const SILENT = 0;
+	const SQUEAL = 1;
+}
 ?>

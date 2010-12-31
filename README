@@ -2,10 +2,12 @@ Dilemma Roulette (The project restart)
                                       
 Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
-was extremely slow and buggy.
+was extremely slow and buggy.       
+
+TODO: make user_id a hash value
 
 Iteration Three - started December 30
-Implement Prisoner's Dilemma with video chat
+Implement Prisoner's Dilemma without video chat
 Add form validation
 
 ------------------------------------------------------------------------                                           

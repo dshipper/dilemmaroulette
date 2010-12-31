@@ -19,6 +19,11 @@ RPS = {
 	SCISSOR: 2
 }
 
+PRISONER = {
+	SILENT: 0,
+	SQUEAL: 1
+}
+
 var gameTypeArray = new Array("Rock, Paper, Scissors", "Prisoner's Dilemma", "Stag Hunt", "Blotto");
 var rpsArray = new Array("rock", "paper", "scissor");
 //rounds array structure: RPS, PRISONER, STAG_HUNT, BLOTTO      
@@ -109,14 +114,36 @@ function processDecision(user_decision, opponent_decision){
 			$(".content").html("You tied. You played " + rpsArray[user_decision] + " and so did your opponent. Try again.");
 		}
 	}
+	else if(this.game_type == GameType.PRISONER){
+		if(user_decision == PRISONER.SILENT && opponent_decision == PRISONER.SQUEAL){
+			//got screwed 
+			$(".content").html("You lost. You stayed silent and your opponent squealed. Sorry.");
+		}                
+		else if(user_decision == PRISONER.SQUEAL && opponent_decision == PRISONER.SILENT){
+			//won                                                                                
+			$(".content").html("You won. You squealed while your opponent stayed silent.");
+		}        
+		else if(user_decision == PRISONER.SQUEAL && opponent_decision == PRISONER.SQUEAL){
+			//tie-b   
+			$(".content").html("You both squealed and both lost.");
+		}   
+		else if(user_decision == PRISONER.SILENT && opponent_decision == PRISONER.SILENT){
+		    //tie-g                                                                
+			$(".content").html("You tied. You both stayed silent and both stayed positive.");
+		}
+	}
     this.rounds = this.rounds+1;
  	/*if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
 		this.game_state = 3; //reconnect
 	}                       
 	else{
 		this.game_state = 4; //carnage
-	}*/
-	this.game_state = 4;
+	}*/    
+	
+	
+	/* REMOVE THIS */ this.game_state = 4; /*REMOVE THIS WHEN READY !!!!!!!!!!!!*/   
+	
+	
 	var game_id = game.game_id;
 	$.get("setGameEnded.php?g="+game_id, function(data){
 		if(data != "1"){
@@ -136,20 +163,35 @@ function makeDecision(){
 	var decision = -1;
 	
 	if(game_type == GameType.ROCK_PAPER_SCISSORS){
-		/*var rock = document.decisionForm.elements[0].value;
-		var paper = document.decisionForm.elements[1].value;
-		var scissors = document.decisionForm.elements[2].value;*/
 		var rock = $("input[class='rock']:checked").val();   
 		var paper = $("input[class='paper']:checked").val();   
 		var scissor = $("input[class='scissor']:checked").val();
 		if(rock == "on"){
-			decision = 0; //rock
+			decision = RPS.ROCK; //rock
 		}                  
 		else if (paper == "on"){
-			decision = 1;  //paper
+			decision = RPS.PAPER;  //paper
 		}                   
 		else if(scissor == "on"){
-			decision = 2;  //scissor
+			decision = RPS.SCISSOR;  //scissor
+		}
+		else{
+			alert("Please choose one.");
+			return;
+		}
+	}
+	else if(game_type == GameType.PRISONER){
+		var squeal = $("input[class='squeal']:checked").val();
+		var silent = $("input[class='silent']:checked").val();
+		if(silent == "on"){
+			decision = PRISONER.SILENT; //silent
+		}   
+		else if(squeal == "on"){
+			decision = PRISONER.SQUEAL; //squeal
+		}   
+		else{
+			alert("Please choose one.");
+			return;
 		}
 	}    
 	$("#status-id").html("Waiting for your partner...");  
@@ -199,6 +241,7 @@ function gameSwitch(){
 		game.getOpponent(true);
 	}
 	else if(this.game_state == 4){
+		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Postgame report");
 		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id);  
 	}
@@ -206,6 +249,7 @@ function gameSwitch(){
 		//that means our opponent logged out  
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
+		$(".content").html("");
 	}                       
 	       
 }                     

@@ -27,6 +27,28 @@ function processScores($item, $key, $game){
 			$game->opponentQuit = 1;
 		}                       
 	}
+	else if($game->game_type == GameType::PRISONER){
+		if($item->homeUserDecision == PRISONER::SILENT && $item->awayUserDecision == PRISONER::SQUEAL){
+			//lost
+			$game->homeScore += -10;
+			$game->awayScore += 20;
+		}         
+		else if($item->homeUserDecision == PRISONER::SQUEAL && $item->awayUserDecision == PRISONER::SILENT){
+			//won   
+			$game->homeScore += 20;
+			$game->awayScore += -10;
+		}        
+		else if($item->homeUserDecision == PRISONER::SQUEAL && $item->awayUserDecision == PRISONER::SQUEAL){
+			//tie-b 
+			$game->homeScore += -20;
+			$game->awayScore += -20;
+		}          
+		else if($item->homeUserDecision == PRISONER::SILENT && $item->awayUserDecision == PRISONER::SILENT){
+			//tie-g 
+			$game->homeScore += 10;
+			$game->awayScore += 10;
+		}
+	}
 	
 }
 
@@ -57,13 +79,13 @@ class Game{
 			$homeDecision = -5;
 			$awayDecision = -5;
 			while($decisions_row = mysql_fetch_array($decisions_result)){ 
-	        	if($decisions_row['user_id'] == $this->homeUser){
+	        	if($decisions_row['user_id'] == $this->homeUser && $decisions_row['decision'] != -2){
 		        	$homeDecision = $decisions_row['decision'];
 				}
-				else if($decisions_row['user_id'] == $this->awayUser){
+				else if($decisions_row['user_id'] == $this->awayUser && $decisions_row['decision'] != -2){
 					$awayDecision = $decisions_row['decision'];
 				}
-				else if($decisions_row['decision'] == -2){
+				else if($decisions_row['decision'] == -2 && $decisions_row['id'] == $this->homeUser){
 					$this->alreadyRan = 1;
 				}
 		   	}
@@ -75,14 +97,15 @@ class Game{
 		array_walk($this->results, 'processScores', $this);
 		if($this->alreadyRan == 0 && $updateDB == 1){
 			//we should upload the home user score to the db 
-			$sql = "UPDATE `games` SET `score` = `score` + $this->homeScore WHERE `id` = $this->homeUser";
+			$sql = "UPDATE `users` SET `score` = `score` + $this->homeScore WHERE `id` = $this->homeUser"; 
+			print $sql;
 			$result = mysql_query($sql);
 			if($this->opponentQuit){
 				$sql = "UPDATE `games` SET `score` = `score` + $this->awayScore WHERE `id` = $this->awayUser";
 				$result = mysql_query($sql);
 			}
 			//now make sure that no one can run this again...
-			$sql = "INSERT INTO `decisions` (`user_id`, `game_id`,`decision`) VALUES (-1, $game_id, -2)";
+			$sql = "INSERT INTO `decisions` (`user_id`, `game_id`,`decision`) VALUES ($this->homeUser, $game_id, -2)";
 			$result = mysql_query($sql);
 		} 
 		

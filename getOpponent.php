@@ -54,9 +54,8 @@ else{
 	if($known == 0){
 		if(!$row['id']){  
 			//$game_type = mt_rand(0,3); TODO: undo this 
-			$game_type = GameType::ROCK_PAPER_SCISSORS;
-			$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')";   
-			//print "$sql";
+			$game_type = GameType::PRISONER;
+			$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')"; 
 			mysql_query($sql);
 			$game_id = mysql_insert_id();
 			print "$game_type/$game_id";     
@@ -68,8 +67,7 @@ else{
 	   }
    } 
    else{
-   	   $sql = "INSERT INTO `games` (`user_one`,`type`,`state`) VALUES ('$user_id', '$game_type', '$waiting_for_user')"; 
-	   //print $sql;
+   	   $sql = "INSERT INTO `games` (`user_one`,`type`,`state`) VALUES ('$user_id', '$game_type', '$waiting_for_user')";    
 	   mysql_query($sql);                                                                                           
 	   $game_id = mysql_insert_id();
 	   print "$game_type/$game_id";
