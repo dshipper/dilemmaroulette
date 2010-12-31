@@ -25,5 +25,10 @@ class RPS {
 class PRISONER{
 	const SILENT = 0;
 	const SQUEAL = 1;
+} 
+
+class STAG{
+	const STAG = 0;
+    const HARE = 1;
 }
 ?>

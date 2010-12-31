@@ -22,6 +22,11 @@ RPS = {
 PRISONER = {
 	SILENT: 0,
 	SQUEAL: 1
+} 
+
+STAG = {
+	STAG: 0,
+	HARE: 1
 }
 
 var gameTypeArray = new Array("Rock, Paper, Scissors", "Prisoner's Dilemma", "Stag Hunt", "Blotto");
@@ -132,6 +137,20 @@ function processDecision(user_decision, opponent_decision){
 			$(".content").html("You tied. You both stayed silent and both stayed positive.");
 		}
 	}
+	else if(this.game_type == GameType.STAG_HUNT){
+		if(user_decision == STAG.STAG && opponent_decision == STAG.STAG){
+			$(".content").html("Congrats your partner is trustworthy! You both win.");
+		}                                                               
+		else if(user_decision == STAG.STAG && opponent_decision == STAG.HARE){
+			$(".content").html("Sorry your partner screwed you over.");
+		}                                                              
+		else if(user_decision == STAG.HARE && opponent_decision == STAG.STAG){
+			$(".content").html("Nice work you screwed over your partner. Have a hare.");
+		}                                                                               
+		else if(user_decision == STAG.HARE && opponent_decision == STAG.HARE){
+			$(".content").html("Neither of you trust eachother. You both are frightened mamsy-pamsies. Take a few points.");
+		}
+	}
     this.rounds = this.rounds+1;
  	/*if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
 		this.game_state = 3; //reconnect
@@ -189,6 +208,20 @@ function makeDecision(){
 		else if(squeal == "on"){
 			decision = PRISONER.SQUEAL; //squeal
 		}   
+		else{
+			alert("Please choose one.");
+			return;
+		}
+	}
+	else if(game_type == GameType.STAG_HUNT){
+		var stag = $("input[class='stag']:checked").val();
+		var hare = $("input[class='hare']:checked").val();
+		if(stag == "on"){
+			decision = STAG.STAG;
+		}                        
+		else if(hare == "on"){
+			decision = STAG.HARE;
+		}                        
 		else{
 			alert("Please choose one.");
 			return;

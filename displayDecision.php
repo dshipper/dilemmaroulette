@@ -17,11 +17,11 @@ else if($game_type == GameType::PRISONER){
 	<input type='submit' value=\"That's my final answer\"/>";
 }   
 else if ($game_type == GameType::STAG_HUNT){
-	
-}   
-else if ($game_type == GameType::BLOTTO){
-	
-}   
+	$description = "The Stag Hunt. Sup Jean-Jacques Rousseau?";
+	$decision_framework = "<input type='radio' class='stag' name='decision' id='decision'/>Stag<br>
+	<input type='radio' class='hare' name='decision' id='decision'/>Hare<br>    
+	<input type='submit' value=\"That's my final answer\"/>";
+}     
 else{
 	
 }
