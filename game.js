@@ -110,12 +110,13 @@ function processDecision(user_decision, opponent_decision){
 		}
 	}
     this.rounds = this.rounds+1;
- 	if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
+ 	/*if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
 		this.game_state = 3; //reconnect
 	}                       
 	else{
 		this.game_state = 4; //carnage
-	}
+	}*/
+	this.game_state = 4;
 	var game_id = game.game_id;
 	$.get("setGameEnded.php?g="+game_id, function(data){
 		if(data != "1"){
@@ -199,7 +200,7 @@ function gameSwitch(){
 	}
 	else if(this.game_state == 4){
 		$("#status-id").html("Postgame report");
-		$(".content").load("postGame.php");  
+		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id);  
 	}
 	else if(this.game_state == -1){
 		//that means our opponent logged out  

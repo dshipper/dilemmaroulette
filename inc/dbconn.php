@@ -15,4 +15,10 @@ class GameType{
 	const STAG_HUNT = 2;
 	const BLOTTO = 3;
 }
+
+class RPS {
+	const ROCK = 0;
+	const PAPER = 1;
+	const SCISSOR = 2;
+}
 ?>
