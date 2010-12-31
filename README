@@ -4,7 +4,12 @@ Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
 was extremely slow and buggy.       
 
-TODO: make user_id a hash value
+TODO: make user_id a hash value 
+
+Iteration Four - started December 30                                    
+Implement Stag hunt.
+
+------------------------------------------------------------------------
 
 Iteration Three - started December 30
 Implement Prisoner's Dilemma without video chat
