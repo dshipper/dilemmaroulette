@@ -4,7 +4,15 @@ Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
 was extremely slow and buggy.       
 
-TODO: make user_id a hash value 
+TODO: make user_id a hash value
+
+Iteration Five - started December 31
+Add a profile page view
+Add a ranking system
+Add a system to see when you have outscored your friends
+Add a system to show when you have advanced in rank (StackOverflow style)
+
+------------------------------------------------------------------------ 
 
 Iteration Four - started December 30                                    
 Implement Stag hunt.
