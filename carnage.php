@@ -51,8 +51,8 @@ function processScores($item, $key, $game){
 	}
 	else if($game->game_type == GameType::STAG_HUNT){
 		if($item->homeUserDecision == STAG::STAG && $item->awayUserDecision == STAG::STAG){
-			$game->homeScore += -20;
-			$game->awayScore += -20;
+			$game->homeScore += 20;
+			$game->awayScore += 20;
 		}                           
 		else if($item->homeUserDecision == STAG::STAG && $item->awayUserDecision == STAG::HARE){
 			$game->homeScore += -20;
@@ -95,19 +95,21 @@ class Game{
 			$sql = "SELECT * FROM `decisions` WHERE `game_id` = '$game_id'";
 			$decisions_result = mysql_query($sql);   
 			$homeDecision = -5;
-			$awayDecision = -5;
+			$awayDecision = -5; 
+			$ran = 0;
 			while($decisions_row = mysql_fetch_array($decisions_result)){ 
 	        	if($decisions_row['user_id'] == $this->homeUser && $decisions_row['decision'] != -2){
-		        	$homeDecision = $decisions_row['decision'];
+		        	$homeDecision = $decisions_row['decision']; 
 				}
-				else if($decisions_row['user_id'] == $this->awayUser && $decisions_row['decision'] != -2){
-					$awayDecision = $decisions_row['decision'];
+				else if($decisions_row['user_id'] == $this->awayUser && $decisions_row['decision'] != -2){  
+					$awayDecision = $decisions_row['decision'];          
 				}
-				else if($decisions_row['decision'] == -2 && $decisions_row['id'] == $this->homeUser){
-					$this->alreadyRan = 1;
+				else if($decisions_row['decision'] == -2 && $decisions_row['user_id'] == $this->homeUser){
+					//$this->alreadyRan = 1;   
+					$ran = 1;
 				}
 		   	}
-			if($homeDecision != -5 && $awayDecision != -5){
+			if($homeDecision != -5 && $awayDecision != -5 && $ran != 1){
 				array_push($this->results, new roundInformation($round, $homeDecision, $awayDecision)); 
 				$round += 1;                                   
 			}

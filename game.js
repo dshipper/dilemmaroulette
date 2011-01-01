@@ -276,14 +276,21 @@ function gameSwitch(){
 	else if(this.game_state == 4){
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Postgame report");
-		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id);  
+		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id); 
+		this.game_state = 5;
+		setTimeout("game.gameSwitch();", 3000); 
 	}
 	else if(this.game_state == -1){
 		//that means our opponent logged out  
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
-		$(".content").html("");
-	}                       
+		$(".content").html(""); 
+		this.game_state = 5; 
+		setTimeout("game.gameSwitch();", 3000);
+	} 
+	else if(this.game_state == 5){
+		document.location = "profile.php?u="+this.user_id;
+	}                      
 	       
 }                     
 
