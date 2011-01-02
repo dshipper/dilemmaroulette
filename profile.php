@@ -28,7 +28,41 @@ if($row['id']){
 	print "This user has played: $games_played games.<br>";
 	print "This user has scored: ".$row['score']." points through those games.<br>";
 	print "This user has a rank of: General.<br>";    
-	print "<a href='game.php'>Start new game</a>";
+	print "<a href='game.php'>Start new game</a>"; 
+	
+	# We require the library
+	require("facebook.php");
+
+	# Creating the facebook object
+	$facebook = new Facebook(array(
+		'appId'  => '166764346686167',
+		'secret' => 'a8b376685a10465f4b49cf7fafb90b3b',
+		'cookie' => true
+	));
+
+	# Let's see if we have an active session
+	$session = $facebook->getSession();
+
+	if(!empty($session)) {
+		# Active session, let's try getting the user id (getUser()) and user info (api->('/me'))
+		try{
+			$uid = $facebook->getUser();
+			$user = $facebook->api('/me');
+		} catch (Exception $e){}
+
+		if(!empty($user)){
+			try{ 
+				$friends = $facebook->api('/me/friends');
+				print_r($friends);
+			}catch(Exception $o){
+				print "Exception: $o";
+			}                         
+			
+		}
+	}
+
+			
+			
 }   
 else{
 	print "Sorry that user does not exist in our database. If you would like to view your profile please click <a href='profile.php'>here</a>";
