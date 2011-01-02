@@ -18,7 +18,9 @@ if(!empty($session)) {
 	try{
 		$uid = $facebook->getUser();
 		$user = $facebook->api('/me');
-	} catch (Exception $e){}
+	} catch (Exception $e){
+		print "ERROR: $e";
+	}
 	
 	if(!empty($user)){
 		# We have an active session, let's check if we have already registered the user

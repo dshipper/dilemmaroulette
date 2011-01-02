@@ -27,7 +27,9 @@ if($row['id']){
 	}
 	print "This user has played: $games_played games.<br>";
 	print "This user has scored: ".$row['score']." points through those games.<br>";
-	print "This user has a rank of: General.<br>";    
+	
+	$rank = $ranksArray[getRank($row['score'])];
+	print "This user has a rank of: $rank <br>";    
 	print "<a href='game.php'>Start new game</a>"; 
 	
 	# We require the library
