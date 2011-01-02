@@ -118,7 +118,6 @@ class Game{
 		if($this->alreadyRan == 0 && $updateDB == 1){
 			//we should upload the home user score to the db 
 			$sql = "UPDATE `users` SET `score` = `score` + $this->homeScore WHERE `id` = $this->homeUser"; 
-			print $sql;
 			$result = mysql_query($sql);
 			if($this->opponentQuit){
 				$sql = "UPDATE `games` SET `score` = `score` + $this->awayScore WHERE `id` = $this->awayUser";
