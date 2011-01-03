@@ -48,6 +48,12 @@ function processScores($item, $key, $game){
 			$game->homeScore += 10;
 			$game->awayScore += 10;
 		}
+		else if($item->awayUserDecision == "-1"){
+			//the other guy quit 
+			$game->homeScore = 20;
+			$game->awayScore = -20; 
+			$game->opponentQuit = 1;
+		}
 	}
 	else if($game->game_type == GameType::STAG_HUNT){
 		if($item->homeUserDecision == STAG::STAG && $item->awayUserDecision == STAG::STAG){
@@ -65,6 +71,12 @@ function processScores($item, $key, $game){
 		else if($item->homeUserDecision == STAG::HARE && $item->awayUserDecision == STAG::HARE){
 			$game->homeScore += 5;
 			$game->awayScore += 5;
+		}
+		else if($item->awayUserDecision == "-1"){
+			//the other guy quit 
+			$game->homeScore = 20;
+			$game->awayScore = -20; 
+			$game->opponentQuit = 1;
 		}
 	}
 	

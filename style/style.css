@@ -1,0 +1,304 @@
+/*
+Theme Name: dilemma roulette
+Theme URI: http://www.dilemmaroulette.com/
+Description: drl theme.
+Version: 1.0
+Author: Dan Shipper
+Author URI: http://www.conveniencesoftware.com
+*/
+body{
+	font: 15px/18px "Helvetica", Arial, Verdana, sans-serif; 
+	height: 100%;               
+	background-color: #e5f3fc;     
+    margin: 0px;   
+}
+      
+@font-face { 
+	font-family: "Helvetica Neue";         
+	src: url("fonts/HelveticaNeue.ttf"); 
+} 
+
+img{
+	border: 0;	
+}
+a {
+	outline: none;	
+}
+a img{
+	border: none;	
+}
+ 
+h1{
+	font-family: "Helvetica Neue"; 
+	font-weight: regular;
+	font-size: 100px;     
+	color: #363636;
+}  
+
+h2{
+	font-family: "Helvetica Neue";
+	font-size: 24px;
+	color: black;  
+	padding-top: 0px;
+	margin-top: 5px;    
+}
+
+.container{
+	width: 900px;
+	margin: auto;
+}   
+ 
+#logo{
+	font-family: "Helvetica Neue";
+	font-size: 30px;
+	color: #363636; 
+	padding: 7px;
+}
+
+#subtitle{
+	font-family: "Helvetica Neue";
+	font-size: 18px;
+	color: #363636;
+	position: relative;
+	bottom: 20px;
+} 
+
+.left-column{
+	width: 600px;  
+}               
+
+.right-column{
+	width: 300px; 
+	float: right;
+	padding-left: 13px;
+}
+
+.box1{             
+	font-family: "Helvetica Neue";
+	font-size: 13px;        
+	color: #363636;
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	width: 350px;  
+	padding-left: 5px; 
+	padding-right: 5px;     
+}
+
+.box2{     
+	float: right;        
+	font-family: "Helvetica Neue";
+	font-size: 13px;        
+	color: #363636;
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	width: 200px;  
+	padding-left: 5px; 
+	padding-right: 5px;     
+}
+
+.box3{                   
+	font-family: "Helvetica Neue";
+	font-size: 13px;        
+	color: #363636;
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	width: 400px;  
+	padding-left: 5px; 
+	padding-right: 5px;   
+	padding-bottom: 10px;  
+}
+
+#status-bar{
+	float: right;
+}        
+
+.game-start{
+	font-family: "Helvetica Neue";
+	font-size: 40px;
+}      
+
+#waiting{     
+	margin: auto;
+}      
+
+.waiting-top{
+	margin: auto;
+	height: 500px;
+}                
+
+#countdown{             
+	padding-top: 13px; 
+	margin-bottom: 5px;
+	height: 37px;
+	width: 57px;
+	background-color: #363636; 
+	color: white;
+	font-family: "Helvetica Neue";
+	font-size: 40px;
+   	float: right;
+}
+
+#round{      
+	padding-top: 20px;
+	color: #363636;
+	font-size: 40px;
+}
+
+.round{
+	position: relative;
+	left: 130px;
+	bottom: 23px;  
+	z-index: 2;
+}  
+
+.content-n{
+	width: 600px;
+	margin: auto;
+}     
+
+#decision-head{
+	font: 20px Helvetica;
+	color: black;
+}
+
+.left-d-column{
+	width: 350px;
+	font: 15px "Helvetica Neue"; 
+	font-weight: bold;    
+	color: #363636;  
+}
+.right-d-column{     
+	float: right; 
+	width: 350px;
+	font: 18px "Helvetica Neue";
+	font-weight: bold;      
+	color: black;     
+	position: relative;
+	left: 100px;
+} 
+
+#home{
+	font: 30px Helvetica;
+	color: #363636;
+	font-weight: bold;
+	width: 350px;  
+	height: 60px;
+	position: relative;
+	bottom: 40px;
+}
+
+#away{
+	font: 30px Helvetica;
+	color: #363636;
+	font-weight: bold;
+	float: right; 
+	width: 350px; 
+	height: 60px; 
+	position: relative;
+	bottom: 40px;
+}
+
+
+#home-score{ 
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;             
+	height: 45px;   
+	width: 65px;
+	padding-left: 7px; 
+	background-color: #f9c7c7; 
+	color: black;
+	font-family: "Helvetica Neue";
+	font-size: 40px;
+	position: relative;
+	right: 70px;
+	top: 40px; 
+} 
+ 
+#away-super{
+	float: right; 
+}
+
+#home-super{
+	
+}
+
+#home-text{
+   float: left;
+}   
+
+#away-text{
+	float: right;
+	padding-bottom: 5px;
+}
+
+#away-score{
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;           
+	height: 45px;     
+	width: 65px;
+	padding-left: 7px;
+	background-color: #f9c7c7; 
+	color: black;
+	font-family: "Helvetica Neue";
+	font-size: 40px; 
+	position: relative;
+	left: 355px;
+	top: 40px;
+}   
+
+#postgame-content{
+	width: 900px;
+	background-color: white;
+	color: #363636;   
+	padding: 10px;
+}   
+  
+table.cool{
+	width: 100%;
+}   
+
+th{
+	height: 25px;
+	background-color: #363636;
+	color: white;
+	font-size: 18px;
+}           
+
+#level{
+	width: 450px;
+	float: right;
+	border-left: solid black 1px;
+	padding-left: 10px;
+}               
+
+#results{
+	width: 450px;
+	padding-right: 5px;
+} 
+
+#won{
+	font: 40px Helvetica;
+	color: #1eb500;
+}
+
+#lost{
+	font: 40px Helvetica;
+	color: #ff3600;
+}                 
+
+#tied{
+	font: 40px Helvetica;
+	color: #5400ff;
+}
+
+#buffer{
+	height: 900px;
+}

@@ -6,7 +6,7 @@
 	
   	include("inc/head.php");
 ?>         
-                     
+  	
 	<body>
 	   	<div class="container">   
 			<br><br><br><h1>dilemma_roulette</h1> 
@@ -21,8 +21,30 @@
 				</center>
 				</div> 
 			</div>
-			
-		</div>
+			<div class="left-column">
+			<div class="box2"><h2>what you need</h2>
+					a brain<br><br>
+					a microphone<br><br>
+					a camera<br><br>
+			</div>
+			<div class="box1"><h2>the rules</h2>
+				you and a random partner have been arrested for a 
+				crime that you committed together.       <br><br>
+
+				you can choose to squeal to the police or remain silent.  <br><br>
+
+				if you both squeal you both lose 20 points.                        <br><br>
+
+				if you both stay silent you each get 10 points.                           <br><br>
+
+				if you squeal and your partner doesn’t you gain 20                                
+				points and he loses 2 points.                                                                           <br><br>
+
+				at the end of 5 rounds the person with the most points 
+				wins.	                                                                                  <br><br>
+			</div>  
+			</div>
+		</div>   
 		<div id="fb-root"></div>
 		<script src="http://connect.facebook.net/en_US/all.js"></script>
 		<script>
@@ -36,4 +58,5 @@
 		    }
 		  });
 		</script>
+		
 	</body>

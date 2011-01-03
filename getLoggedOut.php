@@ -7,7 +7,7 @@ $sql = "SELECT * FROM `users` WHERE `id`=$o LIMIT 1";
 $result = mysql_query($sql);
 $row = mysql_fetch_array($result);
 $quit = 0;
-if($row['last_updated'] >= (time()-12)){
+if($row['last_updated'] >= (time()-20)){
 	//do nothing
 	$sql = "SELECT * FROM `games` WHERE (`state` = '2' OR `state`='1') AND ((`user_one` = '$o' AND `user_two` != '$u') OR (`user_one` != '$u' AND `user_two` = '$o'))";
 	$result = mysql_query($sql);

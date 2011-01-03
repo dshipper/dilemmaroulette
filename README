@@ -4,7 +4,15 @@ Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
 was extremely slow and buggy.       
 
-TODO: make user_id a hash value
+TODO: make user_id a hash value, fix homepage
+
+Iteration Six - started January 2
+              
+Pretify things
+Add a system to notify you when you have advanced in rank
+Add a "post to wall button"
+
+------------------------------------------------------------------------
 
 Iteration Five - started December 31
 Add a profile page view

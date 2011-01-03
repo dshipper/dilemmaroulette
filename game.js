@@ -247,29 +247,36 @@ function gameSwitch(){
 	if(this.game_state == 0){
 		//we are looking for an opponent
 		this.getOpponent(false);        
-		$("#status-id").html("Looking for an opponent....");
+		$("#status-bar").html("<b>start</b> > conspire > decide > postgame report");
+		$(".content").html("<div id='waiting' name='waiting'><center><img src='images/waiting.gif'><br><br>Hey there captain. We're waiting to get into a game.</div>");
 		this.game_state = 1;   
 		return;
 	}
 	else if(this.game_state == 1){
 		//that means we're in a game
 		var opponent_id = this.opponent_id;
-		$("#status-id").html("Connected to an opponent. ID: " + this.opponent_id + ". Game type: " + gameTypeArray[game.game_type]); 
+		$("#status-bar").html("start > <b>conspire</b> > decide > postgame report"); 
+		$("#home").html("<div id='home-super'><table cellspacing='7'><tr><td>" + this.user_id + "</td><td>" + this.opponent_id + "</td></tr></table></div>");
+        $("#away").html("<div id='away-super'><table cellspacing='7'><tr><td>" +  "</td><td>" + "</td></tr></table></div>"); 
+	    $(".round").html(this.rounds);
+	  	$("#waiting").fadeOut("normal");
+		$("#buffer").slideUp("normal");
 		if(game.game_type == null || gameTypeArray[game.game_type] == null){
 			alert(game_type);
 			alert("Error 166");
 		}
 		this.game_state = 2;
-		setTimeout("game.gameSwitch();", 3000);
+		setTimeout("game.gameSwitch();", 10000);
 	} 
 	else if(this.game_state == 2){
 		//that mean's that we're displaying the decision page.
-		$("#status-id").html("Decision Time.");
+		$("#status-bar").html("start > conspire > <b>decide</b> > postgame report");
+		$("#buffer").slideDown("normal");
 		$(".content").load("displayDecision.php?g="+game.game_type);
 	}   
 	else if(this.game_state == 3){
 		//this means we have to reconnect to the last guy
-		$("#status-id").html("Reconnecting to previous opponent...");
+		$("#status-bar").html("start > find matchup > conspire > decide > <b>postgame report</b>");
 		game.game_state = 1;
 		game.getOpponent(true);
 	}
@@ -281,7 +288,8 @@ function gameSwitch(){
 		setTimeout("game.gameSwitch();", 3000); 
 	}
 	else if(this.game_state == -1){
-		//that means our opponent logged out  
+		//that means our opponent logged out 
+		alert("Opponent quit."); 
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
 		$(".content").html(""); 
@@ -308,7 +316,7 @@ function keepUserLoggedIn(){
 	$.get("keepLoggedIn.php?u="+user_id);
 	setInterval(function(){ 
 		$.get("keepLoggedIn.php?u="+user_id);
-	}, 10000);
+	}, 5000);
 }
 
 function checkIfOpponentLoggedOut(){
@@ -323,7 +331,7 @@ function checkIfOpponentLoggedOut(){
 				game.gameSwitch();          
 			}       
 		});
-	}, 10000);
+	}, 20000);
 }
 
 function checkConnected(){                  

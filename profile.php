@@ -62,10 +62,10 @@ if($row['id']){
 				    while(list($i, $value) = each($index)){
 						if(preg_match("/\d+/", $value)){
 							$oauth = $value;
-							$sql = "SELECT * FROM `users` WHERE `oauth_uid` = '$oauth' AND `score` < $score LIMIT 1 ORDER BY $score ASC";
-							$result = mysql_query($sql);
-							$row = mysql_fetch_array($result);
-							if($row['id']){
+							$sql = "SELECT * FROM `users` WHERE (`oauth_uid` = '$oauth') AND (`score` < $score) ORDER BY `score` ASC LIMIT 1"; 
+							$result = mysql_query($sql); 
+							if(mysql_affected_rows()){
+								$row = mysql_fetch_array($result);
 								$friend_id = $row['id'];
 								$sql = "SELECT * FROM `friends` WHERE `user_id` = '$user_id' AND `friend_id` = '$friend_id'";
 								$result = mysql_query($sql); 
