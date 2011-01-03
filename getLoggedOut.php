@@ -25,13 +25,13 @@ else{
 	print "quit";
 }
 
-if($quit){
+if($quit == 1){
 	$sql = "SELECT * FROM `games` WHERE (`user_one` = '$u' AND `user_two` = '$o') OR (`user_one` = '$o' AND `user_two` = '$u') ORDER BY `id` DESC LIMIT 1";
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result);
 	$game_id = $row['id'];
 	 
-	 $sql = "INSERT INTO `decisions` (`user_id`, `game_id`, `decision`) VALUES ('$o', '$game_id', '-1')";    
+	$sql = "INSERT INTO `decisions` (`user_id`, `game_id`, `decision`) VALUES ('$o', '$game_id', '-1')";    
 	$result = mysql_query($sql);
 }
 

@@ -285,7 +285,7 @@ function gameSwitch(){
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
 		$(".content").html(""); 
-		this.game_state = 5; 
+		this.game_state = 4; 
 		setTimeout("game.gameSwitch();", 3000);
 	} 
 	else if(this.game_state == 5){

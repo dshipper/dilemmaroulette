@@ -73,7 +73,7 @@ if($row['id']){
 									print "".$row['username']." uses Dilemma Roulette and has a lower score than you!"; 
 									$sql = "INSERT INTO `friends` (`user_id`, `friend_id`) VALUES ('$user_id', '$friend_id')";
 									$result = mysql_query($sql);
-									array_push()
+									//array_push()
 								}
 							}
 						}                
