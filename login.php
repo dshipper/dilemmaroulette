@@ -1,6 +1,6 @@
 <?php
-include("inc/dbconn.php");  
-# We require the library
+include("inc/dbconn.php"); 
+ # We require the library
 require("facebook.php");
 
 # Creating the facebook object
@@ -29,8 +29,8 @@ if(!empty($session)) {
 		
 		# If not, let's add it to the database
 		if(empty($result)){
-			$name = $user['first_name'];
-			if(strlen($user['first_name']) > 10){
+			$name = $user['first_name']. ' '.$user['last_name'];
+			if(strlen($name) > 10){
 				$name = substr($name, 0,9);
 			}
 			$query = mysql_query("INSERT INTO users (oauth_provider, oauth_uid, username) VALUES ('facebook', {$user['id']}, '$name')");

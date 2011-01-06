@@ -3,30 +3,26 @@ include("inc/dbconn.php");
 if(!isset($_GET['g'])){header("Location: http://google.com");}
 $game_type = $_GET['g'];
 if($game_type == GameType::ROCK_PAPER_SCISSORS){
-	$description = "Just your garden variety rocks, paper scissors game. Scissors beats paper. Paper beats rock. Rock beats scissors. 
-						Best of three rounds (not including ties) wins 50 points.";
-	$decision_framework = "<input type='radio' class='rock' name='decision' id='decision'/>Rock<br>
-	<input type='radio' class='paper' name='decision' id='decision'/>Paper<br>
-	<input type='radio' class='scissor' name='decision' id='decision'/>Scissor<br>
+	$decision_framework = "<input type='radio' class='rock' name='decision' id='decision'/>Rock<br><br>  
+	<input type='radio' class='paper' name='decision' id='decision'/>Paper<br><br>  
+	<input type='radio' class='scissor' name='decision' id='decision'/>Scissor<br><br>  
 	<input type='submit' value=\"Shoot!\"/>";					
 }
-else if($game_type == GameType::PRISONER){
-	$description = "Prisoner's Dilemma. Are you gonna screw over your partner or are you trustworthy?";
-	$decision_framework = "<input type='radio' class='squeal' name='decision' id='decision'/>Squeal<br>
-	<input type='radio' class='silent' name='decision' id='decision'/>Stay silent<br>    
+else if($game_type == GameType::PRISONER){                                                               
+	$decision_framework = "<input type='radio' class='squeal' name='decision' id='decision'/>Squeal<br><br>  
+	<input type='radio' class='silent' name='decision' id='decision'/>Stay silent<br><br>      
 	<input type='submit' value=\"That's my final answer\"/>";
 }   
-else if ($game_type == GameType::STAG_HUNT){
-	$description = "The Stag Hunt. Sup Jean-Jacques Rousseau?";
-	$decision_framework = "<input type='radio' class='stag' name='decision' id='decision'/>Stag<br>
-	<input type='radio' class='hare' name='decision' id='decision'/>Hare<br>    
+else if ($game_type == GameType::STAG_HUNT){                               
+	$decision_framework = "<input type='radio' class='stag' name='decision' id='decision'/>Stag<br><br>
+	<input type='radio' class='hare' name='decision' id='decision'/>Hare<br><br>    
 	<input type='submit' value=\"That's my final answer\"/>";
 }     
 else{
 	
 }
 
-print $description;
+print "<b>Decide</b><br>";
 ?> 
 <br>
 <form action="javascript:game.makeDecision()" name="decisionForm">

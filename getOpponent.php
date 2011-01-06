@@ -53,8 +53,8 @@ else{
 	$row = mysql_fetch_array($r);        
 	if($known == 0){
 		if(!$row['id']){  
-			//$game_type = mt_rand(0,2); TODO: undo this 
-			$game_type = GameType::STAG_HUNT;
+			$game_type = mt_rand(0,2);
+			//$game_type = 1;
 			$sql = "INSERT INTO `games` (user_one,type) VALUES ('$user_id', '$game_type')"; 
 			mysql_query($sql);
 			$game_id = mysql_insert_id();

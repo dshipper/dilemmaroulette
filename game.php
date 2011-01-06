@@ -3,7 +3,7 @@
 include("inc/dbconn.php");
 
 if(!isset($_COOKIE['user_id'])){
-	header("Location: http://www.google.com");
+//	header("Location: http://www.google.com");
 }                       
 
 include("inc/head.php");   
@@ -31,7 +31,7 @@ $user_id = $_COOKIE['user_id'];
         attributes.align = "middle";
         swfobject.embedSWF(
             "DilemmaRoulette.swf", "flashContent", 
-            "900", "368", 
+            "454", "600", 
             swfVersionStr, xiSwfUrlStr, 
             flashvars, params, attributes);
 		<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
@@ -42,19 +42,29 @@ $user_id = $_COOKIE['user_id'];
 	<div class="container">
 		<br><br>   
 		<div id="status-bar">
+		<b>start</b> > conspire & decide > postgame report
 		</div>  
 		<div id="logo">dilemma_roulette</div> 
-		
-	<div class="content"></div> 
-	<div id="buffer"></div>    
-	<br><br><br><br>
+		<br>
+	<div class="content">
+	<div id='waiting' name='waiting'><center><img src='images/waiting.gif'><br><br>Hey there captain. We're waiting to get into a game.</div>
+	</div>
+	<div class="right"> 
+	<div id="game-header"></div><br>   
+	<div id="rules"> 
+	</div>
+	<br><br>                                                 
+	<div id="decision">
+	</div>
+	</div>
+	<div class="left"> 
+	<div id="buffer"></div> 
 	<div class="flash">
  <!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough 
 		 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
 		 when JavaScript is disabled.
-	-->
-	<div id="away"><div id="away-text"></div></div> 
-	<div id="home"></div><div id="home-text"></div></div>
+	-->                                                 
+	<div id="home"></div></div>
     <div id="flashContent">
     	<p>
         	To view this page ensure that Adobe Flash Player version 
@@ -68,14 +78,14 @@ $user_id = $_COOKIE['user_id'];
     </div>
    	
    	<noscript>
-        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="900" height="368" id="DilemmaRoulette">
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="454" height="600" id="DilemmaRoulette">
             <param name="movie" value="DilemmaRoulette.swf" />
             <param name="quality" value="high" />
             <param name="bgcolor" value="#e5f3fc" />
             <param name="allowScriptAccess" value="sameDomain" />
             <param name="allowFullScreen" value="true" />
             <!--[if !IE]>-->
-            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="900" height="368">
+            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="460" height="600">
                 <param name="quality" value="high" />
                 <param name="bgcolor" value="#e5f3fc" />
                 <param name="allowScriptAccess" value="sameDomain" />
@@ -96,7 +106,10 @@ $user_id = $_COOKIE['user_id'];
         </object>
     </noscript>
 	<br><br>
-	<div id="countdown">:30</div><div id="round">Round<div class="round"></div></div></div>
+	</div> 
+	</div>
+	
+	<br><br><br><br><br><br><br><br><br>
 	
 </body>
 	

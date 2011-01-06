@@ -46,13 +46,19 @@ h2{
 .container{
 	width: 900px;
 	margin: auto;
+}
+
+.profile-container{
+	width: 1000px;
+	margin: auto;
 }   
  
 #logo{
 	font-family: "Helvetica Neue";
 	font-size: 30px;
 	color: #363636; 
-	padding: 7px;
+	padding-bottom: 7px;
+	padding-top: 7px;
 }
 
 #subtitle{
@@ -60,11 +66,17 @@ h2{
 	font-size: 18px;
 	color: #363636;
 	position: relative;
-	bottom: 20px;
+	bottom: 30px;
 } 
+       
+#status-bar{
+	float: right;
+}
 
 .left-column{
-	width: 600px;  
+	width: 600px;
+	position: relative;
+	bottom: 20px;  
 }               
 
 .right-column{
@@ -110,149 +122,11 @@ h2{
 	border-color: black;
 	width: 400px;  
 	padding-left: 5px; 
-	padding-right: 5px;   
-	padding-bottom: 10px;  
-}
-
-#status-bar{
-	float: right;
-}        
-
-.game-start{
-	font-family: "Helvetica Neue";
-	font-size: 40px;
-}      
-
-#waiting{     
-	margin: auto;
-}      
-
-.waiting-top{
-	margin: auto;
-	height: 500px;
-}                
-
-#countdown{             
-	padding-top: 13px; 
-	margin-bottom: 5px;
-	height: 37px;
-	width: 57px;
-	background-color: #363636; 
-	color: white;
-	font-family: "Helvetica Neue";
-	font-size: 40px;
-   	float: right;
-}
-
-#round{      
-	padding-top: 20px;
-	color: #363636;
-	font-size: 40px;
-}
-
-.round{
+	padding-right: 5px;
+	padding-bottom: 10px;    
 	position: relative;
-	left: 130px;
-	bottom: 23px;  
-	z-index: 2;
+	bottom: 20px;
 }  
-
-.content-n{
-	width: 600px;
-	margin: auto;
-}     
-
-#decision-head{
-	font: 20px Helvetica;
-	color: black;
-}
-
-.left-d-column{
-	width: 350px;
-	font: 15px "Helvetica Neue"; 
-	font-weight: bold;    
-	color: #363636;  
-}
-.right-d-column{     
-	float: right; 
-	width: 350px;
-	font: 18px "Helvetica Neue";
-	font-weight: bold;      
-	color: black;     
-	position: relative;
-	left: 100px;
-} 
-
-#home{
-	font: 30px Helvetica;
-	color: #363636;
-	font-weight: bold;
-	width: 350px;  
-	height: 60px;
-	position: relative;
-	bottom: 40px;
-}
-
-#away{
-	font: 30px Helvetica;
-	color: #363636;
-	font-weight: bold;
-	float: right; 
-	width: 350px; 
-	height: 60px; 
-	position: relative;
-	bottom: 40px;
-}
-
-
-#home-score{ 
-	border-style: solid;
-	border-width: 1px;
-	border-color: black;             
-	height: 45px;   
-	width: 65px;
-	padding-left: 7px; 
-	background-color: #f9c7c7; 
-	color: black;
-	font-family: "Helvetica Neue";
-	font-size: 40px;
-	position: relative;
-	right: 70px;
-	top: 40px; 
-} 
- 
-#away-super{
-	float: right; 
-}
-
-#home-super{
-	
-}
-
-#home-text{
-   float: left;
-}   
-
-#away-text{
-	float: right;
-	padding-bottom: 5px;
-}
-
-#away-score{
-	border-style: solid;
-	border-width: 1px;
-	border-color: black;           
-	height: 45px;     
-	width: 65px;
-	padding-left: 7px;
-	background-color: #f9c7c7; 
-	color: black;
-	font-family: "Helvetica Neue";
-	font-size: 40px; 
-	position: relative;
-	left: 355px;
-	top: 40px;
-}   
 
 #postgame-content{
 	width: 900px;
@@ -271,34 +145,67 @@ th{
 	color: white;
 	font-size: 18px;
 }           
+#buffer{
+	height: 2000px;
+}
 
-#level{
-	width: 450px;
+#super{
+	background-color: white;
+	border: solid black 1px;
+}
+
+.left{
+	width: 454px;  
+	position: relative;
+	top: 2px;
+}             
+
+.right{
+	width: 430px;
 	float: right;
-	border-left: solid black 1px;
-	padding-left: 10px;
-}               
+}  
 
-#results{
-	width: 450px;
-	padding-right: 5px;
+#game-header{
+	font: 15px Verdana;
+	font-weight: bold;
 } 
 
-#won{
-	font: 40px Helvetica;
-	color: #1eb500;
-}
+.profile-content{
+	font: 20px Helvetica;
+}           
 
-#lost{
-	font: 40px Helvetica;
-	color: #ff3600;
-}                 
+.profile-left-column{
+	width: 350px;
+} 
 
-#tied{
-	font: 40px Helvetica;
-	color: #5400ff;
-}
+.profile-right-super-column{
+	width: 700px;  
+	float: right; 
+	position: relative;
+	top: 25px;
+}                
 
-#buffer{
-	height: 900px;
+.profile-right-left-column{
+	width: 320px;
+}                
+
+.profile-right-right-column{
+	width: 350px; 
+	float:right;
+}               
+
+.profile-rank{        
+	border: 1px solid black;
+	background-color: white;
+	font-weight: bold;  
+	padding: 5px;
+} 
+
+#rank{
+	margin-top: 5px;
+	margin-bottom: 10px;
+} 
+
+#names{
+	font: 15px Helvetica;
 }

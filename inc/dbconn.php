@@ -17,8 +17,7 @@ class GameState{
 class GameType{
 	const ROCK_PAPER_SCISSORS = 0;
 	const PRISONER = 1;
-	const STAG_HUNT = 2;
-	const BLOTTO = 3;
+	const STAG_HUNT = 2; 
 }
 
 class RPS {
@@ -102,6 +101,42 @@ function getRank($score){
 	else if ($score >= 800){
 		return Ranks::GENERAL;
 	}   
+}
+
+function rankToImage($rank){
+	switch($rank){
+		case Ranks::PRIVATE_FIRST_CLASS:
+		    return "images/1-private-first-class-l.png";
+			break;
+		case Ranks::CORPORAL:
+			return "images/2-corporal-l.png";
+			break;
+		case Ranks::SERGEANT:
+		    return "images/3-sergeant-l.png";
+			break;
+	   case Ranks::STAFF_SERGEANT:
+	        return "images/4-staff-sergeant-l.png";
+			break;
+	   case Ranks::MASTER_SERGEANT:
+	        return "images/5-master-sergeant-l.png";
+			break;
+	   case Ranks::SERGEANT_MAJOR:
+	        return "images/6-sergeant-major-l.png";
+			break;
+	   case Ranks::CAPTAIN:
+	        return "images/7-captain-l.png";
+			break;
+	   case Ranks::MAJOR:
+			return "images/8-major-l.png";
+			break;
+	   case Ranks::COLONEL:
+	        return "images/9-colonel-l.png";
+			break;
+	   case Ranks::GENERAL:
+	        return "images/10-general-l.png";
+			break;
+			
+	}
 }
 
 ?>

@@ -9,8 +9,7 @@
 GameType = {
 	ROCK_PAPER_SCISSORS: 0,
 	PRISONER: 1,
-	STAG_HUNT: 2,
-	BLOTTO: 3  
+	STAG_HUNT: 2
 }
 
 RPS = {
@@ -108,47 +107,47 @@ function processDecision(user_decision, opponent_decision){
 	if(this.game_type == GameType.ROCK_PAPER_SCISSORS){                        
 		if((user_decision == RPS.ROCK && opponent_decision == RPS.PAPER) || (user_decision == RPS.PAPER && opponent_decision == RPS.SCISSOR)|| (user_decision == RPS.SCISSOR && opponent_decision == RPS.ROCK)){
 			//we lost dude
-			$(".content").html("You lost! You played " + rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Try again next time!");
+			$("#decision").html("<b>Decide</b><br><br>You lost! You played " + rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Try again next time!");
 		}                                                                                                        
 		else if((opponent_decision == RPS.ROCK && user_decision == RPS.PAPER) || (opponent_decision == RPS.PAPER && user_decision == RPS.SCISSOR)|| (opponent_decision == RPS.SCISSOR && user_decision == RPS.ROCK)){
 			//we won
-		   $(".content").html("You won! You played "+ rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Nice work!"); 
+		   $("#decision").html("<b>Decide</b><br><br>You won! You played "+ rpsArray[user_decision] + " and your opponent played " + rpsArray[opponent_decision] + ". Nice work!"); 
 		}                                                                                               
 		else if(user_decision == opponent_decision){  
 			//we tied
-			$(".content").html("You tied. You played " + rpsArray[user_decision] + " and so did your opponent. Try again.");
+			$("#decision").html("<b>Decide</b><br><br>You tied. You played " + rpsArray[user_decision] + " and so did your opponent. Try again.");
 		}
 	}
 	else if(this.game_type == GameType.PRISONER){
 		if(user_decision == PRISONER.SILENT && opponent_decision == PRISONER.SQUEAL){
 			//got screwed 
-			$(".content").html("You lost. You stayed silent and your opponent squealed. Sorry.");
+			$("#decision").html("<b>Decide</b><br><br>You lost. You stayed silent and your opponent squealed. Sorry.");
 		}                
 		else if(user_decision == PRISONER.SQUEAL && opponent_decision == PRISONER.SILENT){
 			//won                                                                                
-			$(".content").html("You won. You squealed while your opponent stayed silent.");
+			$("#decision").html("<b>Decide</b><br><br>You won. You squealed while your opponent stayed silent.");
 		}        
 		else if(user_decision == PRISONER.SQUEAL && opponent_decision == PRISONER.SQUEAL){
 			//tie-b   
-			$(".content").html("You both squealed and both lost.");
+			$("#decision").html("<b>Decide</b><br><br>You both squealed and both lost.");
 		}   
 		else if(user_decision == PRISONER.SILENT && opponent_decision == PRISONER.SILENT){
 		    //tie-g                                                                
-			$(".content").html("You tied. You both stayed silent and both stayed positive.");
+			$("#decision").html("<b>Decide</b><br><br>You tied. You both stayed silent and both stayed positive.");
 		}
 	}
 	else if(this.game_type == GameType.STAG_HUNT){
 		if(user_decision == STAG.STAG && opponent_decision == STAG.STAG){
-			$(".content").html("Congrats your partner is trustworthy! You both win.");
+			$("#decision").html("<b>Decide</b><br><br>Congrats your partner is trustworthy! You both win.");
 		}                                                               
 		else if(user_decision == STAG.STAG && opponent_decision == STAG.HARE){
-			$(".content").html("Sorry your partner screwed you over.");
+			$("#decision").html("<b>Decide</b><br><br>Sorry your partner screwed you over.");
 		}                                                              
 		else if(user_decision == STAG.HARE && opponent_decision == STAG.STAG){
-			$(".content").html("Nice work you screwed over your partner. Have a hare.");
-		}                                                                               
+			$("#decision").html("<b>Decide</b><br><br>Nice work you screwed over your partner. Have a hare.");
+		}                                                                              
 		else if(user_decision == STAG.HARE && opponent_decision == STAG.HARE){
-			$(".content").html("Neither of you trust eachother. You both are frightened mamsy-pamsies. Take a few points.");
+			$("#decision").html("<b>Decide</b><br><br>Neither of you trust eachother. You both are frightened ninny's. No guts not glory, but take a few points.");
 		}
 	}
     this.rounds = this.rounds+1;
@@ -160,16 +159,19 @@ function processDecision(user_decision, opponent_decision){
 	}*/    
 	
 	
-	/* REMOVE THIS */ this.game_state = 4; /*REMOVE THIS WHEN READY !!!!!!!!!!!!*/   
+	/* REMOVE THIS */ //this.game_state = 4; /*REMOVE THIS WHEN READY !!!!!!!!!!!!*/   
 	
-	
+    this.game_state = 5; 
 	var game_id = game.game_id;
 	$.get("setGameEnded.php?g="+game_id, function(data){
 		if(data != "1"){
 			alert("Error. SetGameEnded.");
 		}
 		else{
-			setTimeout("game.gameSwitch()", 5000); 
+			$.get("carnage.php?u="+this.user_id + "&o="+this.opponent_id, function(data){
+				setTimeout("game.gameSwitch()", 5000);  
+			});
+			
 		}
 	});
 }
@@ -227,8 +229,7 @@ function makeDecision(){
 			return;
 		}
 	}    
-	$("#status-id").html("Waiting for your partner...");  
-	$(".content").html("...");
+	$("#decision").html("<b>Decide</b><br><br><center><img src='images/waiting.gif'><br><br>Waiting for your partner.</center>");    
 	$.get("makeDecision.php?u="+user_id+"&g="+game_id+"&d="+decision);
 	
 	var checked = setInterval(function(){
@@ -243,50 +244,55 @@ function makeDecision(){
 	}, 3000);
 }
 
+function updateGameInfo(){                     
+	if(game.game_type == GameType.ROCK_PAPER_SCISSORS){
+		$("#game-header").html("<center>Connected. Game type is: Rock, Paper, Scissors</center><br>");
+		$("#rules").html("<b>Rules</b><br><br>The classic third grade strategy game. Paper beats rock, rock beats scissors, and scissors beats paper.<br><br><b>Do you have what it takes to dominate your opponent?</b><br><br>");  
+	}
+	else if(game.game_type == GameType.PRISONER){
+		$("#game-header").html("<center>Connected. Game type is: Prisoner's Dilemma</center><br>");
+		 $("#rules").html("<b>Rules</b><br><br>You are a criminal who is about to be arrested. You have two choices: squeal to the police or stay silent. <br><br>If you both squeal you both lose 20 points. If you squeal and your partner stays silent you gain 20 points and he loses 20 points. <br><br>If you both stay silent you both gain 10 points (but no one wins). <br><br><b>What are you going to do?</b>");
+	}
+	else if(game.game_type == GameType.STAG_HUNT){
+		$("#game-header").html("<center>Connected. Game type is: Stag Hunt</center><br>"); 
+		$("#rules").html("<b>Rules</b><br><br>You and your partner are on a hunt. You can each decide whether you want to hunt a stag or a hare. <br><br>If you decide to hunt a stag, your partner must also hunt a stag. If you both decide to hunt stags you both gain 20 points. <br><br>If you decide to hunt a hare you will get 5 points regardless of what your partner does. <br><br>But there's a catch! If you decide to hunt a hare and your partner decides to hunt a stag, you will gain 5 points while he loses 20 points and you will win the round.<br><br><b>What will you choose - points or security?</b>");
+	} 
+}
+
 function gameSwitch(){       
 	if(this.game_state == 0){
-		//we are looking for an opponent
+		//we are looking for an opponent 
 		this.getOpponent(false);        
-		$("#status-bar").html("<b>start</b> > conspire > decide > postgame report");
-		$(".content").html("<div id='waiting' name='waiting'><center><img src='images/waiting.gif'><br><br>Hey there captain. We're waiting to get into a game.</div>");
+		$("#status-bar").html("<b>start</b> > conspire & decide > postgame report");             
 		this.game_state = 1;   
 		return;
 	}
-	else if(this.game_state == 1){
+	else if(this.game_state == 1){ 
 		//that means we're in a game
 		var opponent_id = this.opponent_id;
-		$("#status-bar").html("start > <b>conspire</b> > decide > postgame report"); 
-		$("#home").html("<div id='home-super'><table cellspacing='7'><tr><td>" + this.user_id + "</td><td>" + this.opponent_id + "</td></tr></table></div>");
-        $("#away").html("<div id='away-super'><table cellspacing='7'><tr><td>" +  "</td><td>" + "</td></tr></table></div>"); 
-	    $(".round").html(this.rounds);
-	  	$("#waiting").fadeOut("normal");
+		$("#status-bar").html("start > <b>conspire & decide </b> > postgame report");     
+		updateGameInfo();             
+		$("#decision").load("displayDecision.php?g="+game.game_type);
+	  	$(".content").html("");
 		$("#buffer").slideUp("normal");
 		if(game.game_type == null || gameTypeArray[game.game_type] == null){
 			alert(game_type);
 			alert("Error 166");
-		}
-		this.game_state = 2;
-		setTimeout("game.gameSwitch();", 10000);
-	} 
-	else if(this.game_state == 2){
-		//that mean's that we're displaying the decision page.
-		$("#status-bar").html("start > conspire > <b>decide</b> > postgame report");
-		$("#buffer").slideDown("normal");
-		$(".content").load("displayDecision.php?g="+game.game_type);
+		}                      
 	}   
 	else if(this.game_state == 3){
 		//this means we have to reconnect to the last guy
-		$("#status-bar").html("start > find matchup > conspire > decide > <b>postgame report</b>");
+		$("#status-bar").html("start > conspire & decide > <b>postgame report</b>");
 		game.game_state = 1;
 		game.getOpponent(true);
 	}
-	else if(this.game_state == 4){
+	/*else if(this.game_state == 4){
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Postgame report");
 		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id); 
 		this.game_state = 5;
 		setTimeout("game.gameSwitch();", 3000); 
-	}
+	}*/
 	else if(this.game_state == -1){
 		//that means our opponent logged out 
 		alert("Opponent quit."); 
@@ -313,10 +319,12 @@ function start(){
 
 function keepUserLoggedIn(){
 	var user_id = this.user_id;
-	$.get("keepLoggedIn.php?u="+user_id);
-	setInterval(function(){ 
-		$.get("keepLoggedIn.php?u="+user_id);
-	}, 5000);
+	$.get("keepLoggedIn.php?u="+user_id, function(data){
+		setInterval(function(){ 
+			$.get("keepLoggedIn.php?u="+user_id);
+		}, 15000);
+	});
+	
 }
 
 function checkIfOpponentLoggedOut(){
@@ -331,7 +339,7 @@ function checkIfOpponentLoggedOut(){
 				game.gameSwitch();          
 			}       
 		});
-	}, 20000);
+	}, 30000);
 }
 
 function checkConnected(){                  
@@ -374,7 +382,7 @@ function getOpponent(reconnect){
 		var array = data.split("/");
 		if(array.length < 3){
 			//alert("We didn't find a match. Now we wait for someone to connect to us."); 
-			game.game_type = array[0];
+			game.game_type = array[0];                           
 			game.game_id = array[1];     
 			if(game.game_type == -1 || game.game_id == -1){
 				alert("Error 67.");

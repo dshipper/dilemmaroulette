@@ -62,7 +62,7 @@ function processScores($item, $key, $game){
 		}                           
 		else if($item->homeUserDecision == STAG::STAG && $item->awayUserDecision == STAG::HARE){
 			$game->homeScore += -20;
-			$game->awayScore += 20;
+			$game->awayScore += 5;
 		}                          
 		else if($item->homeUserDecision == STAG::HARE && $item->awayUserDecision == STAG::STAG){
 			$game->homeScore += 5;

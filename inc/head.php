@@ -7,7 +7,7 @@
 	  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 	  <title>dilemma roulette - may the best player win.</title>
 	  <link rel="stylesheet" href="style/style.css">     
-	  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+	  <script type="text/javascript" src="jquery.min.js">
 	  </script>
 	 <script type="text/javascript" src="game.js">
 		</script>
