@@ -4,7 +4,15 @@ Had to restart the project because it languished for two months
 due to poor design consideration at the beginning meaning development
 was extremely slow and buggy.       
 
-TODO: make user_id a hash value, fix homepage
+TODO: make user_id a hash value, fix homepage instructions
+
+Iteration Seven - started January 7
+Fix homepage instructions
+Redo the carnage page to account for the fact that each game is only 1 round
+Figure out what to do when rock paper shoot ties
+Fix quit
+Clean up any TODO's
+Do thorough bug testing
 
 Iteration Six - started January 2
               
