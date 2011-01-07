@@ -1,76 +1,19 @@
 <?php
 include("inc/dbconn.php");
-include("inc/head.php");  
- 
+include("inc/head.php");   
+
 function printFriends($item, $key){
 	if($key < 5){
 		print "<br>".($key+1).". $item";
 	}
 }
 
-?>
-	</head>                                               
-	<body> 
-			<div id="fb-root"></div>
-			 <script src="http://connect.facebook.net/en_US/all.js"></script>
-			 <script>
-			   FB.init({
-			     appId  : '166764346686167',
-			     status : true, // check login status
-			     cookie : true, // enable cookies to allow the server to access the session
-			     xfbml  : true  // parse XFBML
-			   });
-            function doPost(name){
-	        	var text = $("#beaten_friends").html();
-				array = text.split(":");
-				var caption = array[0];
-				var description = array[1];
-				caption = caption.replace("You have", name + " has");
-				caption = caption.replace("your", "their");
-				post(name, caption + ":\n\r " + description);
-			}  
-			function post(name, text){
-				var prop  = {
-				        "1" : "Person 1",
-				        "2" : "Person 2",
-				        "3" : "Person 3",
-				        };
-				 FB.ui(
-				  {
-				    method: 'stream.publish',
-				    attachment: {
-				      name: 'Dilemma Roulette',
-				      caption: name + " is a boss at Dilemma Roulette",
-					  description: "He beat 40 of his friends.",
-				      properties: prop
-				        
-				      ,
-				      href: 'http://dilemmaroulette.com/'
-				    },
-				    action_links: [
-				      { text: 'fbrell', href: 'http://fbrell.com/' }
-				    ]
-				  },
-				  function(response) {
-				    if (response && response.post_id) {
-				      alert('Post was published.');
-				    } else {
-				      alert('Post was not published.');
-				    }
-				  }
-				);
-			}
-			</script>	
-		<div class="profile-container">
-			<br><br>    
-			<div id="logo">dilemma_roulette</div>   
-		<div class="profile-content">
-		<div class="profile-right-super-column">
-			<div class="profile-right-right-column"> 
-				 
-			
+function facebookPrint($item, $key){
+	if($key < 5){
+		print '"'.($key+1).'" : "'.$item.'",';
+	}
+}
 
-<?php
 
 $user_id = $_COOKIE['user_id'];
 if(isset($_GET['u'])){ 
@@ -92,50 +35,8 @@ if($row['id']){
 	}
 	$name = $row['username'];
 	$my_score = $row['score'];
-	?>      
-			global leaderboard<br>
-			<div id='names'> 
-			<?php
-			$sql = "SELECT `username`, `score` FROM `users` ORDER BY `score` DESC LIMIT 20";     
-			$result = mysql_query($sql);
-			$rank = 1;
-			while($row = mysql_fetch_array($result)){
-				$n_score =  $row['score'];
-				print "<br>$rank.  ".$row['username']." ($n_score)";
-				$rank+=1;
-			}
-			?>
-			</div> <br>
-			
-			</div>
-			<div class="profile-right-left-column">
-			<center>
-   			<div class="profile-rank">
-			<?php
-			$rank = $ranksArray[getRank($score)];
-			print "<div id ='rank'>Rank: $rank</div> ";
-			print "<img src='".rankToImage(getRank($score))."'>";
-			?>
-			</div> 
-			
-		<?php
-			print "<br><a href='game.php'>Start new game</a>";
-			
-		 ?>
-		</center>
-		</div>
-	    
-	</div> 
-	<div class="profile-left-column"> 
-	<?php   
-	print "<br>Player name: $name";
-print "<br>";
-	print "Games played: $games_played games.<br>";
-	print "Score: $my_score points.<br><br>";			
-    ?>
-    	<br>friends<br><br>
-	<div id='names'>
-   <?php
+}
+
     # We require the library
 require("facebook.php");
 
@@ -189,6 +90,114 @@ if(!empty($session)) {
 
 	}
 }
+
+?>
+
+	</head>                                               
+	<body> 
+			<div id="fb-root"></div>
+			 <script src="http://connect.facebook.net/en_US/all.js"></script>
+			 <script>
+			   FB.init({
+			     appId  : '166764346686167',
+			     status : true, // check login status
+			     cookie : true, // enable cookies to allow the server to access the session
+			     xfbml  : true  // parse XFBML
+			   });
+            function doPost(name){
+	        	var text = $("#beaten_friends").html();
+				array = text.split(":");
+				var caption = array[0];
+				var description = array[1];
+				caption = caption.replace("You have", name + " has");
+				caption = caption.replace("your", "their");
+				caption = caption + ":";
+				var names = {
+					<?php
+						array_walk($friends_array, 'facebookPrint');
+					?>
+				};
+				post(caption, names);
+			}  
+
+			function post(caption, names){
+				
+				 FB.ui(
+				  {
+				    method: 'stream.publish',
+				    attachment: {
+				      name: 'Dilemma Roulette',
+				      caption: caption, 
+				      properties: names,
+				      href: 'http://dilemmaroulette.com/'
+				    },
+				    action_links: [
+				      { text: 'fbrell', href: 'http://fbrell.com/' }
+				    ]
+				  },
+				  function(response) {
+				    if (response && response.post_id) {
+				      alert('Post was published.');
+				    } else {
+				      alert('Post was not published.');
+				    }
+				  }
+				);
+			}
+			</script>	
+		<div class="profile-container">
+			<br><br>    
+			<div id="logo">dilemma_roulette</div>   
+		<div class="profile-content">
+		<div class="profile-right-super-column">
+			<div class="profile-right-right-column"> 
+				 
+			
+
+	?>      
+			global leaderboard<br>
+			<div id='names'> 
+			<?php
+			$sql = "SELECT `username`, `score` FROM `users` ORDER BY `score` DESC LIMIT 20";     
+			$result = mysql_query($sql);
+			$rank = 1;
+			while($row = mysql_fetch_array($result)){
+				$n_score =  $row['score'];
+				print "<br>$rank.  ".$row['username']." ($n_score)";
+				$rank+=1;
+			}
+			?>
+			</div> <br>
+			
+			</div>
+			<div class="profile-right-left-column">
+			<center>
+   			<div class="profile-rank">
+			<?php
+			$rank = $ranksArray[getRank($score)];
+			print "<div id ='rank'>Rank: $rank</div> ";
+			print "<img src='".rankToImage(getRank($score))."'>";
+			?>
+			</div> 
+			
+		<?php
+			print "<br><a href='game.php'>Start new game</a>";
+			
+		 ?>
+		</center>
+		</div>
+	    
+	</div> 
+	<div class="profile-left-column"> 
+	<?php   
+	print "<br>Player name: $name";
+print "<br>";
+	print "Games played: $games_played games.<br>";
+	print "Score: $my_score points.<br><br>";			
+    ?>
+    	<br>friends<br><br>
+	<div id='names'>
+<?php  
 if($beaten_friends == 0){
 	print "You haven't overtaken any of your friends at Dilemma Roulette. Better get cracking.";
 }
@@ -197,14 +206,6 @@ else{
 	array_walk($friends_array, 'printFriends');
 	print "</div><br><br><a href='#'><img src='images/post.png' onclick='doPost(\"$name\")'></a>";
 }
-
-
-}   
-else{
-	print "Sorry that user does not exist in our database. If you would like to view your profile please click <a href='profile.php'>here</a>";
-}
-
-
 
 ?> 
  
