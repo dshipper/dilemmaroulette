@@ -27,21 +27,10 @@
 					a microphone<br><br>
 					a camera<br><br>
 			</div>
-			<div class="box1"><h2>the rules</h2>
-				you and a random partner have been arrested for a 
-				crime that you committed together.       <br><br>
-
-				you can choose to squeal to the police or remain silent.  <br><br>
-
-				if you both squeal you both lose 20 points.                        <br><br>
-
-				if you both stay silent you each get 10 points.                           <br><br>
-
-				if you squeal and your partner doesn’t you gain 20                                
-				points and he loses 2 points.                                                                           <br><br>
-
-				at the end of 5 rounds the person with the most points 
-				wins.	                                                                                  <br><br>
+			<div class="box1"><h2>how it works</h2>
+				Dilemma Roulette allows you to connect via video to random people across the globe and play simple games with them. <br><br>     
+				The games include the prisoner's dilemma, stag hunt, and rock, paper, scissors shoot. <br><br>
+				Win games in order to advance in rank and beat your friends.
 			</div>  
 			</div>
 		</div>   
