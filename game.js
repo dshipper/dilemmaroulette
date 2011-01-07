@@ -126,7 +126,10 @@ function processDecision(user_decision, opponent_decision){
 		}                                                                                               
 		else if(user_decision == opponent_decision){  
 			//we tied
-			$("#decision").html("<b>Decide</b><br><br>You tied. You played " + rpsArray[user_decision] + " and so did your opponent. Try again.");
+			$("#decision").html("<b>Decide</b><br><br>You tied. You played " + rpsArray[user_decision] + " and so did your opponent. No one gets anything.");
+		} 
+		else if(opponent_decision == -1){
+		    $("#decision").html("<b>Decide</b><br><br>Your opponent quit. Take a few points."); 
 		}
 	}
 	else if(this.game_type == GameType.PRISONER){
@@ -146,6 +149,9 @@ function processDecision(user_decision, opponent_decision){
 		    //tie-g                                                                
 			$("#decision").html("<b>Decide</b><br><br>You tied. You both stayed silent and both stayed positive.");
 		}
+		else if(opponent_decision == -1){
+		    $("#decision").html("<b>Decide</b><br><br>Your opponent quit. Take a few points."); 
+		}
 	}
 	else if(this.game_type == GameType.STAG_HUNT){
 		if(user_decision == STAG.STAG && opponent_decision == STAG.STAG){
@@ -159,6 +165,9 @@ function processDecision(user_decision, opponent_decision){
 		}                                                                              
 		else if(user_decision == STAG.HARE && opponent_decision == STAG.HARE){
 			$("#decision").html("<b>Decide</b><br><br>Neither of you trust eachother. You both are frightened ninny's. No guts not glory, but take a few points.");
+		}
+		else if(opponent_decision == -1){
+		    $("#decision").html("<b>Decide</b><br><br>Your opponent quit. Take a few points."); 
 		}
 	}
 	else{
@@ -187,7 +196,7 @@ function processDecision(user_decision, opponent_decision){
 		else{ 
 			//alert("Loading carnage: " + user_id + "  " + opponent_id);                       
 			$.get("carnage.php?u="+user_id + "&o="+opponent_id, function(data){
-				setTimeout("game.gameSwitch()", 5000);  
+				setTimeout("game.gameSwitch()", 7000);  
 			});
 			
 		}
@@ -316,11 +325,23 @@ function gameSwitch(){
 		alert("Opponent quit."); 
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Opponent quit.");
-		$(".content").html(""); 
-		this.game_state = 4; 
-		/* TODO FIX THIS*/  
-		setTimeout("game.gameSwitch();", 3000);
-	} 
+		$(".decision").html("<b>Decide</b><br>Your opponent quit. Take a few points.");
+		var game_id = this.game_id;
+		var user_id = this.user_id;
+		var opponent_id = this.opponent_id; 
+		$.get("setGameEnded.php?g="+game_id, function(data){
+			if(data != "1"){
+				alert("Error. SetGameEnded.");
+			}
+			else{ 
+				//alert("Loading carnage: " + user_id + "  " + opponent_id);                       
+				$.get("carnage.php?u="+user_id + "&o="+opponent_id, function(data){
+					setTimeout("game.gameSwitch()", 7000);  
+				});
+
+			}
+		});
+    } 
 	else if(this.game_state == 5){
 		document.location = "profile.php?u="+this.user_id;
 	}                      
@@ -329,7 +350,8 @@ function gameSwitch(){
 
 function setUserPeerId(id){
 	this.user_peer_id = id;
-	$.get("setPeerId.php?p="+id+"&u="+this.user_id, function(){
+	var user_id = this.user_id;
+	$.get("setPeerId.php?p="+id+"&u="+user_id, function(){
 		game.keepUserLoggedIn(); 
 		$.get("keepLoggedIn.php?u="+user_id, function(data){          
 			game.newGame();                                      

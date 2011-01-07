@@ -162,7 +162,7 @@ if(!empty($session)) {
 			</script>	
 		<div class="profile-container">
 			<br><br>    
-			<div id="logo">dilemma_roulette</div>   
+			<div id="logo"><a href='profile.php' style='text-decoration: none; color: black;'>dilemma_roulette</a></div>   
 		<div class="profile-content">
 		<div class="profile-right-super-column">
 			<div class="profile-right-right-column"> 

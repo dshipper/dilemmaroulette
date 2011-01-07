@@ -44,7 +44,7 @@ $user_id = $_COOKIE['user_id'];
 		<div id="status-bar">
 		<b>start</b> > conspire & decide > postgame report
 		</div>  
-		<div id="logo">dilemma_roulette</div> 
+		<div id="logo"><a href='profile.php' style='text-decoration: none; color: black;'>dilemma_roulette</a></div> 
 		<br>
 	<div class="content">
 	<div id='waiting' name='waiting'><center><img src='images/waiting.gif'><br><br>Hey there captain. We're waiting to get into a game.</div>
