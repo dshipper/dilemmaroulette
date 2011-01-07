@@ -76,7 +76,7 @@ if(!empty($session)) {
 							$result = mysql_query($sql); 
 							if(!mysql_affected_rows()){                                                               
 								$sql = "INSERT INTO `friends` (`user_id`, `friend_id`) VALUES ('$user_id', '$friend_id')";
-								//$result = mysql_query($sql);
+								$result = mysql_query($sql);
 								$beaten_friends += 1;
 								array_push($friends_array, $row['username']);
 							}

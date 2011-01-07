@@ -123,7 +123,7 @@ class Game{
 		$this->homeUser = $home;
 		$this->awayUser = $away;
 		
-		$sql = "SELECT * FROM `games` WHERE (`user_one` = '$home' AND `user_two` = '$away') OR (`user_one` = '$away' AND `user_two` = '$home')";
+		$sql = "SELECT * FROM `games` WHERE (`user_one` = '$home' AND `user_two` = '$away') OR (`user_one` = '$away' AND `user_two` = '$home') ORDER BY `id` DESC LIMIT 1";
 		$result = mysql_query($sql);                                                                 
 	    $game_id = "";
 		$round = 0; 

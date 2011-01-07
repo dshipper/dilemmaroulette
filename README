@@ -7,12 +7,20 @@ was extremely slow and buggy.
 TODO: make user_id a hash value, fix homepage instructions
 
 Iteration Seven - started January 7
-Fix homepage instructions
-Redo the carnage page to account for the fact that each game is only 1 round
+
+Still to do
+
 Figure out what to do when rock paper shoot ties
 Fix quit
 Clean up any TODO's
-Do thorough bug testing
+Do thorough bug testing        
+
+Finished 
+  
+Fix homepage instructions         
+Fix flash
+Redo the carnage page to account for the fact that each game is only 1 round   
+Make friend lookup work again
 
 Iteration Six - started January 2
               

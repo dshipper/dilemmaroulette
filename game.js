@@ -161,7 +161,11 @@ function processDecision(user_decision, opponent_decision){
 			$("#decision").html("<b>Decide</b><br><br>Neither of you trust eachother. You both are frightened ninny's. No guts not glory, but take a few points.");
 		}
 	}
-    this.rounds = this.rounds+1;
+	else{
+		$("#decision").html("Sorry we couldn't get the correct game type.");
+	}
+    this.rounds = this.rounds+1; 
+	$("#status-bar").html("start > conspire & decide > <b>postgame report</b>");   
  	/*if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
 		this.game_state = 3; //reconnect
 	}                       
@@ -294,13 +298,13 @@ function gameSwitch(){
 			alert("Error 166");
 		}                      
 	}   
-	else if(this.game_state == 3){
+	/*else if(this.game_state == 3){
 		//this means we have to reconnect to the last guy
 		$("#status-bar").html("start > conspire & decide > <b>postgame report</b>");
 		game.game_state = 1;
 		game.getOpponent(true);
 	}
-	/*else if(this.game_state == 4){
+	else if(this.game_state == 4){
 		clearInterval(this.keep_checking_for_opponent_logged_out);
 		$("#status-id").html("Postgame report");
 		$(".content").load("carnage.php?u="+this.user_id + "&o="+this.opponent_id); 
@@ -326,8 +330,10 @@ function gameSwitch(){
 function setUserPeerId(id){
 	this.user_peer_id = id;
 	$.get("setPeerId.php?p="+id+"&u="+this.user_id, function(){
-		game.keepUserLoggedIn();          
-		game.newGame();
+		game.keepUserLoggedIn(); 
+		$.get("keepLoggedIn.php?u="+user_id, function(data){          
+			game.newGame();                                      
+		});
 	});
 }                          
 
@@ -337,11 +343,11 @@ function start(){
 
 function keepUserLoggedIn(){
 	var user_id = this.user_id;
-	$.get("keepLoggedIn.php?u="+user_id, function(data){
-		setInterval(function(){ 
-			$.get("keepLoggedIn.php?u="+user_id);
-		}, 15000);
-	});
+	
+	setInterval(function(){ 
+ 		$.get("keepLoggedIn.php?u="+user_id);
+   	}, 15000);
+
 	
 }
 

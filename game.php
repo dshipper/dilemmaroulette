@@ -85,7 +85,7 @@ $user_id = $_COOKIE['user_id'];
             <param name="allowScriptAccess" value="sameDomain" />
             <param name="allowFullScreen" value="true" />
             <!--[if !IE]>-->
-            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="460" height="600">
+            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="454" height="600">
                 <param name="quality" value="high" />
                 <param name="bgcolor" value="#e5f3fc" />
                 <param name="allowScriptAccess" value="sameDomain" />

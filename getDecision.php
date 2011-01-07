@@ -7,7 +7,7 @@ $opponent_id = $_GET['o'];
 $game_id = $_GET['g'];
 
 if(isset($_GET['o']) && isset($_GET['g'])){
-	$sql = "SELECT * FROM `decisions` WHERE `game_id` = '$game_id' AND `user_id` = '$opponent_id' LIMIT 1";
+	$sql = "SELECT * FROM `decisions` WHERE `game_id` = '$game_id' AND `user_id` = '$opponent_id' AND `decision` != '-2' LIMIT 1";
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result);  
 	if($row['id']){
