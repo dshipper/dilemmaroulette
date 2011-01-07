@@ -33,16 +33,6 @@ var rpsArray = new Array("rock", "paper", "scissor");
 //rounds array structure: RPS, PRISONER, STAG_HUNT, BLOTTO      
 var roundsArray = new Array(3,3,1,1); 
 
-function leveledUp(){
-	$(".announce").html("You leveled up! <a href = '#' onclick = 'setCookie('levelup', ''); $('.announce').fadeOut('slow')'>X</a>");  
-	setCookie("levelup", "true");
-}
-
-function leveledDown(){
-	$(".announce").html("You leveled down. <a href = '#' onclick = 'setCookie('levelup', ''); $('.announce').fadeOut('slow')'>X</a>");  
-	setCookie("levelup", "true");
-}
-
 function getCookie(c_name){
 	if(document.cookie.length > 0){
 		c_start = document.cookie.indexOf(c_name + "=");
@@ -60,6 +50,17 @@ function setCookie(c_name,value)
 {
 	document.cookie=c_name+ "=" +escape(value);
 }   
+
+
+function leveledUp(){
+	$(".announce").html("<center><div class='announce-text'>Congrats you leveled up!</div></center>");  
+	setCookie("levelup", "");
+}
+
+function leveledDown(){
+	$(".announce").html("<center><div class='announce-text'>Sorry, you leveled down.</div></center>");  
+	setCookie("levelup", "");
+}
 
 // This function returns the appropriate reference, 
 // depending on the browser.
@@ -325,7 +326,8 @@ function gameSwitch(){
 function setUserPeerId(id){
 	this.user_peer_id = id;
 	$.get("setPeerId.php?p="+id+"&u="+this.user_id, function(){
-		return;
+		game.keepUserLoggedIn();          
+		game.newGame();
 	});
 }                          
 
@@ -443,8 +445,6 @@ function startGame(peer_id){
 	$(document).ready(function(){
 		game.user_id = getCookie("user_id");
 		game.setUserPeerId(peer_id);
-		game.keepUserLoggedIn();          
-		game.newGame();
 	});
 }    
 

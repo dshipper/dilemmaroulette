@@ -209,3 +209,15 @@ th{
 #names{
 	font: 15px Helvetica;
 }
+
+.announce{
+	width: 100%;
+	height: 50px;
+	background-color: black;
+	font: 25px Helvetica;
+	color: white;
+}
+
+.announce-text{
+	padding-top: 10px;
+}

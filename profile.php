@@ -95,15 +95,21 @@ if(!empty($session)) {
      <script type="text/javascript">
 	 	$(document).ready(function(){
 	   		if(getCookie('levelup') != '') {
-	     		$('.announce').fadeIn('slow');
+				if(getCookie('levelup') == "leveledup"){
+					leveledUp();
+	     			$('.announce').fadeIn('slow');        
+				}   
+				else if (getCookie("levelup") == "leveleddown"){
+					leveledDown();
+					$(".announce").fadeIn('slow');
+				}
 	   		}
 	 	});
 	 </script>
 	</head>                                               
 	<body> 
 			<div id="fb-root"></div>
-			<div class="announce" style="display:none;"> 
-			asfd          
+			<div class="announce" style="display:none;">        
 			</div>
 			 <script src="http://connect.facebook.net/en_US/all.js"></script>
 			 <script>
