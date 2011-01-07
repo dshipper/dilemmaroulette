@@ -3,7 +3,7 @@
 include("inc/dbconn.php");
 
 if(!isset($_COOKIE['user_id'])){
-//	header("Location: http://www.google.com");
+	header("Location: http://www.google.com");
 }                       
 
 include("inc/head.php");   

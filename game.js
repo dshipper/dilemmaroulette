@@ -31,7 +31,17 @@ STAG = {
 var gameTypeArray = new Array("Rock, Paper, Scissors", "Prisoner's Dilemma", "Stag Hunt", "Blotto");
 var rpsArray = new Array("rock", "paper", "scissor");
 //rounds array structure: RPS, PRISONER, STAG_HUNT, BLOTTO      
-var roundsArray = new Array(3,3,1,1);
+var roundsArray = new Array(3,3,1,1); 
+
+function leveledUp(){
+	$(".announce").html("You leveled up! <a href = '#' onclick = 'setCookie('levelup', ''); $('.announce').fadeOut('slow')'>X</a>");  
+	setCookie("levelup", "true");
+}
+
+function leveledDown(){
+	$(".announce").html("You leveled down. <a href = '#' onclick = 'setCookie('levelup', ''); $('.announce').fadeOut('slow')'>X</a>");  
+	setCookie("levelup", "true");
+}
 
 function getCookie(c_name){
 	if(document.cookie.length > 0){
@@ -162,13 +172,16 @@ function processDecision(user_decision, opponent_decision){
 	/* REMOVE THIS */ //this.game_state = 4; /*REMOVE THIS WHEN READY !!!!!!!!!!!!*/   
 	
     this.game_state = 5; 
-	var game_id = game.game_id;
+	var game_id = game.game_id; 
+	var user_id = this.user_id;
+	var opponent_id = this.opponent_id;
 	$.get("setGameEnded.php?g="+game_id, function(data){
 		if(data != "1"){
 			alert("Error. SetGameEnded.");
 		}
-		else{
-			$.get("carnage.php?u="+this.user_id + "&o="+this.opponent_id, function(data){
+		else{ 
+			//alert("Loading carnage: " + user_id + "  " + opponent_id);                       
+			$.get("carnage.php?u="+user_id + "&o="+opponent_id, function(data){
 				setTimeout("game.gameSwitch()", 5000);  
 			});
 			
@@ -300,6 +313,7 @@ function gameSwitch(){
 		$("#status-id").html("Opponent quit.");
 		$(".content").html(""); 
 		this.game_state = 4; 
+		/* TODO FIX THIS*/  
 		setTimeout("game.gameSwitch();", 3000);
 	} 
 	else if(this.game_state == 5){
@@ -310,7 +324,9 @@ function gameSwitch(){
 
 function setUserPeerId(id){
 	this.user_peer_id = id;
-	$.get("setPeerId.php?p="+id+"&u="+this.user_id);
+	$.get("setPeerId.php?p="+id+"&u="+this.user_id, function(){
+		return;
+	});
 }                          
 
 function start(){
@@ -387,9 +403,9 @@ function getOpponent(reconnect){
 			if(game.game_type == -1 || game.game_id == -1){
 				alert("Error 67.");
 			}
-			if(reconnect = true){
-				getFlexApp('DilemmaRoulette').reset();
-			}
+//			if(reconnect = true){
+  //  			getFlexApp('DilemmaRoulette').reset();
+	//		}
 			//now the only piece of info we don't have is the opponent's id
 			//so this should be given to us when we get connected to by another
 			//flash instance.             
@@ -407,6 +423,7 @@ function getOpponent(reconnect){
 			var ret = getFlexApp('DilemmaRoulette').connect(game.opponent_peer_id);
 			if(ret == "failed"){    
 				var game_id = game.game_id;
+				alert("Error connecting");
 				$.get("setGameEnded.php?g="+game_id, function(data){
 					if(data != "1"){
 						alert("Error. SetGameEnded.");

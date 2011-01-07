@@ -92,10 +92,19 @@ if(!empty($session)) {
 }
 
 ?>
-
+     <script type="text/javascript">
+	 	$(document).ready(function(){
+	   		if(getCookie('levelup') != '') {
+	     		$('.announce').fadeIn('slow');
+	   		}
+	 	});
+	 </script>
 	</head>                                               
 	<body> 
 			<div id="fb-root"></div>
+			<div class="announce" style="display:none;"> 
+			asfd          
+			</div>
 			 <script src="http://connect.facebook.net/en_US/all.js"></script>
 			 <script>
 			   FB.init({
@@ -151,10 +160,7 @@ if(!empty($session)) {
 		<div class="profile-content">
 		<div class="profile-right-super-column">
 			<div class="profile-right-right-column"> 
-				 
-			
-
-	?>      
+				       
 			global leaderboard<br>
 			<div id='names'> 
 			<?php

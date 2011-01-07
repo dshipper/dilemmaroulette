@@ -4,6 +4,32 @@ include("inc/dbconn.php");
 //As a rule a decision of -1 = the guy who made it quit
 //Any decision of -2 means that we have already run the score counter.  
 
+function checkAdvanceRank($old_score, $new_score){
+	$old_rank = getRank($old_score);
+	$new_rank = getRank($new_score); 
+	//print $old_score;
+	//print $new_score;
+	if($old_rank == $new_rank){
+		//do nothing     
+	   setcookie("leveledup", "tie-$old_rank-$new_rank");
+	}               
+	else if($old_rank < $new_rank){
+		//leveled up  
+		 setcookie("levelup", "leveledup");
+		
+	}               
+	else if($old_rank > $new_rank){
+		//leveled down
+		 setcookie("levelup", "leveleddown");
+		
+		
+	} 
+	else{
+	    setcookie("fuck", "shit");
+	}
+	
+}
+
 function processScores($item, $key, $game){
 	//this counts up the scores of all the users based on what type of game we have   
 	if($game->game_type == GameType::ROCK_PAPER_SCISSORS){ 
@@ -129,6 +155,13 @@ class Game{
 		array_walk($this->results, 'processScores', $this);
 		if($this->alreadyRan == 0 && $updateDB == 1){
 			//we should upload the home user score to the db 
+			//first get the old score     
+			$s = $this->homeUser;
+			$sql = "SELECT `score` FROM `users` WHERE `id` = '$s' LIMIT 1";
+			$result = mysql_query($sql);
+			$user =  mysql_fetch_array($result);
+			$user_score = $user['score'];
+			checkAdvanceRank($user_score, (($this->homeScore)+$user_score));
 			$sql = "UPDATE `users` SET `score` = `score` + $this->homeScore WHERE `id` = $this->homeUser"; 
 			$result = mysql_query($sql);
 			if($this->opponentQuit){
