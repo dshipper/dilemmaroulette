@@ -7,7 +7,8 @@
   	include("inc/head.php");
 ?>         
   	
-	<body>
+	<body> 
+	<div class="wrapper">
 	   	<div class="container">   
 			<br><br><br><h1>dilemma_roulette</h1> 
 			<div id="subtitle">use charisma, intelligence, strategy and statistics to rise to the top of the social ladder. may the best player win.  </div>
@@ -32,8 +33,18 @@
 				The games include the prisoner's dilemma, stag hunt, and rock, paper, scissors shoot. <br><br>
 				Win games in order to advance in rank and beat your friends.
 			</div>  
-			</div>
+			</div> 
+			
+		                                                   <br>
+		</div>
+		<div class="push"></div>
 		</div>   
+		 
+			<div class="footer">
+			created by <a class="no-decor" href="http://www.twitter.com/danshipper">dan shipper.</a>
+			please send job offers, deep expressions of gratitude and offers of free money  to: dan (at) danshipper.com <br><br>
+			all princely/nigerian monetary solicitations may be directed to <a class="no-decor" href="mailto:info@christine2010.com">Christine O'Donnell</a> for most immediate response.  
+			</div>
 		<div id="fb-root"></div>
 		<script src="http://connect.facebook.net/en_US/all.js"></script>
 		<script>
@@ -46,6 +57,6 @@
 		      // The user has logged out, and the cookie has been cleared     
 		    }
 		  });
-		</script>
+		</script>                                                                                                           
 		
 	</body>

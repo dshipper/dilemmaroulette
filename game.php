@@ -3,7 +3,7 @@
 include("inc/dbconn.php");
 
 if(!isset($_COOKIE['user_id'])){
-	header("Location: http://www.google.com");
+	header("Location: index.php");
 }                       
 
 include("inc/head.php");   
@@ -31,7 +31,7 @@ $user_id = $_COOKIE['user_id'];
         attributes.align = "middle";
         swfobject.embedSWF(
             "DilemmaRoulette.swf", "flashContent", 
-            "454", "600", 
+            "454", "584", 
             swfVersionStr, xiSwfUrlStr, 
             flashvars, params, attributes);
 		<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
@@ -56,6 +56,8 @@ $user_id = $_COOKIE['user_id'];
 	<br><br>                                                 
 	<div id="decision">
 	</div>
+	<div id="linkback">
+	</div>
 	</div>
 	<div class="left"> 
 	<div id="buffer"></div> 
@@ -64,8 +66,7 @@ $user_id = $_COOKIE['user_id'];
 		 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
 		 when JavaScript is disabled.
 	-->                                                 
-	<div id="home"></div></div>
-    <div id="flashContent">
+ 	<div id="flashContent">
     	<p>
         	To view this page ensure that Adobe Flash Player version 
 			10.0.0 or greater is installed. 
@@ -78,14 +79,14 @@ $user_id = $_COOKIE['user_id'];
     </div>
    	
    	<noscript>
-        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="454" height="600" id="DilemmaRoulette">
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="454" height="584" id="DilemmaRoulette">
             <param name="movie" value="DilemmaRoulette.swf" />
             <param name="quality" value="high" />
             <param name="bgcolor" value="#e5f3fc" />
             <param name="allowScriptAccess" value="sameDomain" />
             <param name="allowFullScreen" value="true" />
             <!--[if !IE]>-->
-            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="454" height="600">
+            <object type="application/x-shockwave-flash" data="DilemmaRoulette.swf" width="454" height="584">
                 <param name="quality" value="high" />
                 <param name="bgcolor" value="#e5f3fc" />
                 <param name="allowScriptAccess" value="sameDomain" />
@@ -104,7 +105,8 @@ $user_id = $_COOKIE['user_id'];
             </object>
             <!--<![endif]-->
         </object>
-    </noscript>
+    </noscript>  	
+	</div>
 	<br><br>
 	</div> 
 	</div>

@@ -1,7 +1,5 @@
 <?php
-include("inc/dbconn.php");
-include("inc/head.php");   
-
+  
 function printFriends($item, $key){
 	if($key < 5){
 		print "<br>".($key+1).". $item";
@@ -16,10 +14,18 @@ function facebookPrint($item, $key){
 
 
 $user_id = $_COOKIE['user_id'];
-if(isset($_GET['u'])){ 
+if($_GET['u'] != ""){ 
 	//then we're looking for someone elses profile
 	$user_id = $_GET['u'];                        
-}                                                 
+}
+else{
+	if($user_id == ""){
+		header("Location: index.php");
+	}
+}
+
+include("inc/dbconn.php");
+include("inc/head.php");                                                 
 
 $sql = "SELECT * FROM `users` WHERE `id` = '$user_id' LIMIT 1";
 $result = mysql_query($sql);

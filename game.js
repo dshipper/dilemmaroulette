@@ -173,6 +173,8 @@ function processDecision(user_decision, opponent_decision){
 	else{
 		$("#decision").html("Sorry we couldn't get the correct game type.");
 	}
+	var user_id = game.user_id; 
+	$("#linkback").html("<a href='profile.php'>Back to your profile.</a>");
     this.rounds = this.rounds+1; 
 	$("#status-bar").html("start > conspire & decide > <b>postgame report</b>");   
  	/*if(this.rounds < roundsArray[this.game_type]){   //TODO: make sure this works lol
@@ -195,7 +197,7 @@ function processDecision(user_decision, opponent_decision){
 		}
 		else{ 
 			//alert("Loading carnage: " + user_id + "  " + opponent_id);                       
-			$.get("carnage.php?u="+user_id + "&o="+opponent_id, function(data){
+			$.get("updateScores.php?u="+user_id + "&o="+opponent_id, function(data){
 				setTimeout("game.gameSwitch()", 7000);  
 			});
 			
@@ -257,7 +259,11 @@ function makeDecision(){
 		}
 	}    
 	$("#decision").html("<b>Decide</b><br><br><center><img src='images/waiting.gif'><br><br>Waiting for your partner.</center>");    
-	$.get("makeDecision.php?u="+user_id+"&g="+game_id+"&d="+decision);
+	$.get("makeDecision.php?u="+user_id+"&g="+game_id+"&d="+decision, function(data, status){
+		if(status == "failed"){
+			game.makeDecision();
+		}
+	});
 	
 	var checked = setInterval(function(){
 		$.get("getDecision.php?o="+opponent_id+"&g="+game_id, function(data){
@@ -286,6 +292,25 @@ function updateGameInfo(){
 	} 
 }
 
+function displayDecision(){
+	var start = "<b>Decide</b><br><br><form action='javascript:game.makeDecision()' name='decisionForm'>"; 
+	var close = "</form>";     
+	var middle = "";
+	if(game.game_type == GameType.ROCK_PAPER_SCISSORS){
+	   middle =  "<input type='radio' class='rock' name='decision' id='decision'/>Rock<br><br><input type='radio' class='paper' name='decision' id='decision'/>Paper<br><br><input type='radio' class='scissor' name='decision' id='decision'/>Scissor<br><br><input type='submit' value=\"Shoot!\"/>"; 
+	}   
+	else if(game.game_type == GameType.PRISONER){
+	   middle = "<input type='radio' class='squeal' name='decision' id='decision'/>Squeal<br><br><input type='radio' class='silent' name='decision' id='decision'/>Stay silent<br><br><input type='submit' value=\"That's my final answer\"/>"; 
+	}   
+	else if(game.game_type == GameType.STAG_HUNT){
+	   middle = "<input type='radio' class='stag' name='decision' id='decision'/>Stag<br><br><input type='radio' class='hare' name='decision' id='decision'/>Hare<br><br><input type='submit' value=\"That's my final answer\"/>";
+	}
+	var total = start + middle +close;
+	//console.log("TOTAL: " + total);
+	$("#decision").html(total);
+	
+}
+
 function gameSwitch(){       
 	if(this.game_state == 0){
 		//we are looking for an opponent 
@@ -299,7 +324,7 @@ function gameSwitch(){
 		var opponent_id = this.opponent_id;
 		$("#status-bar").html("start > <b>conspire & decide </b> > postgame report");     
 		updateGameInfo();             
-		$("#decision").load("displayDecision.php?g="+game.game_type);
+	    displayDecision();
 	  	$(".content").html("");
 		$("#buffer").slideUp("normal");
 		if(game.game_type == null || gameTypeArray[game.game_type] == null){
@@ -321,11 +346,12 @@ function gameSwitch(){
 		setTimeout("game.gameSwitch();", 3000); 
 	}*/
 	else if(this.game_state == -1){
-		//that means our opponent logged out 
-		alert("Opponent quit."); 
-		clearInterval(this.keep_checking_for_opponent_logged_out);
-		$("#status-id").html("Opponent quit.");
-		$(".decision").html("<b>Decide</b><br>Your opponent quit. Take a few points.");
+		//that means our opponent logged out   
+		var kc = this.keep_checking_for_opponent_logged_out;
+		clearInterval(kc);
+		$("#status-bar").html("Opponent quit.");
+		$("#decision").html("<b>Decide</b><br>Your opponent quit. Take a few points.");		
+		$("#linkback").html("<a href='profile.php'>Back to your profile.</a>");
 		var game_id = this.game_id;
 		var user_id = this.user_id;
 		var opponent_id = this.opponent_id; 
@@ -335,8 +361,9 @@ function gameSwitch(){
 			}
 			else{ 
 				//alert("Loading carnage: " + user_id + "  " + opponent_id);                       
-				$.get("carnage.php?u="+user_id + "&o="+opponent_id, function(data){
-					setTimeout("game.gameSwitch()", 7000);  
+				$.get("updateScores.php?u="+user_id + "&o="+opponent_id, function(data){
+					this.game_state = 5;         
+					setTimeout("document.location = 'profile.php';", 7000);  
 				});
 
 			}
@@ -351,11 +378,19 @@ function gameSwitch(){
 function setUserPeerId(id){
 	this.user_peer_id = id;
 	var user_id = this.user_id;
-	$.get("setPeerId.php?p="+id+"&u="+user_id, function(){
-		game.keepUserLoggedIn(); 
-		$.get("keepLoggedIn.php?u="+user_id, function(data){          
-			game.newGame();                                      
-		});
+	$.get("setPeerId.php?p="+id+"&u="+user_id, function(data, status){
+		if(status == "failed"){
+			location.reload(true);
+		}else{
+			$.get("keepLoggedIn.php?u="+user_id, function(data, status){
+				if(status == "failed"){
+					location.reload(true);
+				}else{
+					game.keepUserLoggedIn();              
+					game.newGame();        
+				}                              
+			});  
+		}
 	});
 }                          
 
@@ -365,7 +400,6 @@ function start(){
 
 function keepUserLoggedIn(){
 	var user_id = this.user_id;
-	
 	setInterval(function(){ 
  		$.get("keepLoggedIn.php?u="+user_id);
    	}, 15000);

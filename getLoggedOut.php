@@ -9,7 +9,7 @@ $row = mysql_fetch_array($result);
 $quit = 0;
 if($row['last_updated'] >= (time()-60)){ 
 	//do nothing
-	$sql = "SELECT * FROM `games` WHERE (`state` = '2' OR `state`='1') AND ((`user_one` = '$o' AND `user_two` != '$u') OR (`user_one` != '$u' AND `user_two` = '$o'))";
+	/*$sql = "SELECT * FROM `id` WHERE (`state` = '2' OR `state`='1') AND ((`user_one` = '$o' AND `user_two` != '$u') OR (`user_one` != '$u' AND `user_two` = '$o'))";
 	$result = mysql_query($sql);
 	$error = 0;
 	while($row = mysql_fetch_array($result)){
@@ -18,7 +18,7 @@ if($row['last_updated'] >= (time()-60)){
 	if($error == 1){  
 		$quit = 1;
 		print "quit";
-	}
+	}*/
 }    
 else{  
 	$quit=1;

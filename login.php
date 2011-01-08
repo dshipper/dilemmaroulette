@@ -31,7 +31,7 @@ if(!empty($session)) {
 		if(empty($result)){
 			$name = $user['first_name']. ' '.$user['last_name'];
 			if(strlen($name) > 10){
-				$name = substr($name, 0,9);
+				$name = substr($name, 0,19);
 			}
 			$query = mysql_query("INSERT INTO users (oauth_provider, oauth_uid, username) VALUES ('facebook', {$user['id']}, '$name')");
 			$query = mysql_query("SELECT * FROM users WHERE id = " . mysql_insert_id());
