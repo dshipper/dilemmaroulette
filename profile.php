@@ -67,7 +67,8 @@ if(!empty($session)) {
 	if(!empty($user)){
 		try{ 
 			$friends = $facebook->api('/me/friends'); 
-			$friends = $friends["data"];
+			$friends = $friends["data"];  
+			//print_r($friends);
 			$friends_array = array();
 			while (list($array, $index) = each($friends)) {
 			    while(list($i, $value) = each($index)){
